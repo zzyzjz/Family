@@ -21,6 +21,7 @@
     <string name="update_contact_list_failed" translatable="false">Update contact list failed</string>
     <string name="update_black_list_failed" translatable="false">Update black list failed</string>
     <string name="update_groups_failed" translatable="false">Update groups failed</string>
+    <string name="title_activity_modify_head">ModifyHeadActivity</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

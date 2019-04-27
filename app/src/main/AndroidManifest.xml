@@ -25,7 +25,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AddContactsActivity"></activity>
+        <activity android:name=".ui.ModifyNickActivity"></activity>
+        <activity android:name=".ui.ModifyHeadActivity" />
+        <activity android:name=".ui.AddContactsActivity" />
         <activity android:name=".ui.ChatActivity" />
         <activity
             android:name=".ui.RegisterActivity"

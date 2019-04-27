@@ -141,7 +141,7 @@ public class ContactFragment extends Fragment {
         Log.e(TAG, "c1 image -> "+ c1.getImage() );
 
         contactedList.add(c1);
-        Contacted c2 = new Contacted("zjz",R.drawable.head);
+        Contacted c2 = new Contacted("zjz",2131165473);
         Log.e(TAG, "c2 name -> "+ c2.getName() );
         Log.e(TAG, "c2 image -> "+ c2.getImage() );
 
@@ -206,7 +206,7 @@ public class ContactFragment extends Fragment {
     private void addAUser(){
 
         List<Users> users = UsersBaseDao.searchAll();
-        Log.e(TAG, "-----------------206" );
+        Log.e(TAG, "-----------------209" );
         for(Users use :users){
             Log.e(TAG, "id ---> "+use.getId() );
             Log.e(TAG, "userId ---> "+use.getUserId() );
@@ -214,7 +214,7 @@ public class ContactFragment extends Fragment {
             Log.e(TAG, "nick ---> "+use.getNickname() );
             Log.e(TAG, "head ---> "+use.getHead() );
         }
-        Log.e(TAG, "---------------------214" );
+        Log.e(TAG, "---------------------217" );
 //        UsersBaseDao.deleteAll();
 //        UsersBaseDao.deleteByKey(4);
 
@@ -224,12 +224,12 @@ public class ContactFragment extends Fragment {
 //        UsersBaseDao.insert(u2);
 //        Users u3 = new Users(null,"user3","qwer","user zjz",R.drawable.head);
 //        UsersBaseDao.insert(u3);
-//        Users u4 = new Users(null,"user4","qwer",null,R.drawable.harry_potter1);
+//        Users u4 = new Users(null,"user4","qwer",null,R.drawable.head11);
 //        UsersBaseDao.insert(u4);
-
-
+//
+//
 //        users = UsersBaseDao.searchAll();
-//        Log.e(TAG, "`````196" );
+//        Log.e(TAG, "-------------------232" );
 //        for(Users use :users){
 //            Log.e(TAG, "id ---> "+use.getId() );
 //            Log.e(TAG, "userId ---> "+use.getUserId() );

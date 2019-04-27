@@ -1,26 +1,32 @@
 package com.example.familyapplication.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.familyapplication.R;
+import com.example.familyapplication.db.Users;
+import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.widget.EaseTitleBar;
 
 
 public class MeFragment extends Fragment {
     private String TAG = "zzzzzjz-Me";
+    private Users user;
+    private ImageView head;
+    private TextView id,nick;
+    private Button modifyHead,modifyNick;
     private Button logout;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,6 +84,35 @@ public class MeFragment extends Fragment {
                         Log.e(TAG, "退出登录失败···"+message );
                     }
                 });
+            }
+        });
+
+        user = UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser());
+
+        head = getActivity().findViewById(R.id.me_iv_head);
+        head.setImageResource(user.getHead());
+
+        nick = getActivity().findViewById(R.id.me_tv_nick);
+        if(!TextUtils.isEmpty(user.getNickname())){
+            nick.setText(user.getNickname());
+        }
+
+        id = getActivity().findViewById(R.id.me_tv_id);
+        id.setText(user.getUserId());
+
+        modifyHead = getActivity().findViewById(R.id.me_btn_modify_head);
+        modifyHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ModifyHeadActivity.class));
+            }
+        });
+
+        modifyNick = getActivity().findViewById(R.id.me_btn_modify_nick);
+        modifyNick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ModifyNickActivity.class));
             }
         });
     }
