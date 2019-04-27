@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name" translatable="false">Family</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
+    <string name="title_message" translatable="false">消息</string>
+    <string name="title_address_list" translatable="false">联系人</string>
+    <string name="title_me" translatable="false">我的</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="User_name_cannot_be_empty" translatable="false">用户名不能为空！</string>
+    <string name="Password_cannot_be_empty" translatable="false">密码不能为空！</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="Sync_Groups_From_Server" translatable="false">Sync groups with server</string>
+    <string name="add_public_group_chat" translatable="false">Add public group</string>
+    <string name="add_public_chat_room" translatable="false">Add public channel</string>
+    <string name="update_contact_list" translatable="false">Update contact list</string>
+    <string name="update_black_list" translatable="false">Update black list</string>
+    <string name="update_groups" translatable="false">Update groups</string>
+
+    <string name="update_contact_list_failed" translatable="false">Update contact list failed</string>
+    <string name="update_black_list_failed" translatable="false">Update black list failed</string>
+    <string name="update_groups_failed" translatable="false">Update groups failed</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+</resources>
