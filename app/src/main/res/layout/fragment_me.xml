@@ -31,7 +31,7 @@
             android:layout_height="130dp"
             android:id="@+id/me_iv_head"
             android:padding="4dp"
-            android:background="@drawable/me"
+            android:background="@drawable/border_dark"
             android:src="@drawable/head"
             />
         <Button
@@ -42,7 +42,7 @@
             android:layout_marginLeft="30dp"
             android:layout_gravity="center"
             android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/me"
+            android:background="@drawable/border_dark"
             />
     </LinearLayout>
     <LinearLayout
@@ -64,7 +64,7 @@
             android:id="@+id/me_btn_modify_nick"
             android:layout_marginLeft="30dp"
             android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/me"
+            android:background="@drawable/border_dark"
             android:text=" > "/>
     </LinearLayout>
 

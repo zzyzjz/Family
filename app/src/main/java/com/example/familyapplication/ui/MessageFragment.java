@@ -85,6 +85,7 @@ public class MessageFragment extends Fragment {
         conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 EMConversation conversation = conversationListView.getItem(position);
                 String username = conversation.conversationId();
                 Log.e(TAG, "onItemClick: 90" );

@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.familyapplication.Contacted;
+import com.example.familyapplication.ContactedInfoActivity;
 import com.example.familyapplication.FmlContactAdapter;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
@@ -94,8 +96,22 @@ public class ContactFragment extends Fragment {
         //处理联系人信息，传给adapter，显示在listView上
         initContacts();//初始化联系人数据
         FmlContactAdapter adapter = new FmlContactAdapter(getActivity(),R.layout.item_contacts,contactedList);
-        ListView listView = getActivity().findViewById(R.id.list_view);
+        final ListView listView = getActivity().findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contacted contacted = contactedList.get(position);
+                Intent i = new Intent(getActivity(), ContactedInfoActivity.class);
+                i.putExtra("contactedId",contacted.getContactedId());
+                i.putExtra("name",contacted.getName());
+                i.putExtra("head",contacted.getImage());
+                //contactedId 为当前联系人的userId
+                startActivity(i);
+
+            }
+        });
 
 
 
@@ -136,12 +152,12 @@ public class ContactFragment extends Fragment {
 
     private void initContacts(){
 
-        Contacted c1 = new Contacted("zzzzzjz",R.drawable.head81);
+        Contacted c1 = new Contacted("u1","zzzzzjz",R.drawable.head81);
         Log.e(TAG, "c1 name -> "+ c1.getName() );
         Log.e(TAG, "c1 image -> "+ c1.getImage() );
 
         contactedList.add(c1);
-        Contacted c2 = new Contacted("zjz",2131165473);
+        Contacted c2 = new Contacted("u2","zjz",2131165473);
         Log.e(TAG, "c2 name -> "+ c2.getName() );
         Log.e(TAG, "c2 image -> "+ c2.getImage() );
 
@@ -191,7 +207,8 @@ public class ContactFragment extends Fragment {
                 name = UsersBaseDao.searchByUserId(id).getNickname();
             }
 
-            Contacted contacted = new Contacted(name,image);
+            Contacted contacted = new Contacted(id,name,image);
+            //id是该联系人的userId,name是这条item将要显示的名字，image是头像
 
             contactedList.add(contacted);
 
