@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ModifyInfoActivity"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/contact_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/colorPrimary"
+        hyphenate:titleBarBackground="@color/colorPrimary"
+        hyphenate:titleBarTitle="修改备注"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#cccccc" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="备注"
+            android:textSize="20sp"
+            android:paddingTop="50dp"
+            android:paddingLeft="50dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_name"
+            android:text="备注"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="50dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="生日"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="50dp"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_birth"
+            android:text="生日"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="50dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TEL"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="50dp"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_tel"
+            android:text="TEL"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="50dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="最近通话时间"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="50dp"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_timeofcall"
+            android:text="最近通话时间"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="50dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="最近体检时间"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="50dp"
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_timeofinspect"
+            android:text="最近体检时间"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="50dp"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="备注板"
+            android:textSize="20sp"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="50dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/modify_infor_et_remarks"
+            android:text="备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注"
+            android:textSize="20sp"
+            android:background="@drawable/border_dark"
+            android:layout_marginHorizontal="50dp"
+            android:padding="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="30dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_weight="1"
+                android:id="@+id/modify_info_btn_back"
+                android:background="@drawable/btn_back"
+                android:gravity="center"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:text="B A C K"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_weight="1"
+                android:id="@+id/modify_info_btn_modify"
+                android:background="@drawable/button_login_bg"
+                android:gravity="center"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp"
+                android:text="保   存"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.familyapplication.Contacted;
-import com.example.familyapplication.ContactedInfoActivity;
 import com.example.familyapplication.FmlContactAdapter;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;

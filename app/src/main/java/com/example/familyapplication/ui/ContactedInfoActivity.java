@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.familyapplication.Contacted;
+import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;
-import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;
-import com.example.familyapplication.ui.ChatActivity;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 
@@ -50,9 +50,23 @@ public class ContactedInfoActivity extends AppCompatActivity {
         //设置头像
         head = findViewById(R.id.contacted_info_iv_head);
         head.setImageResource(contacted.getImage());
-        //设置name
+
+        //设置name,若修改，需显示修改后的，所以name要从数据库获取
         name = findViewById(R.id.contacted_info_tv_name);
-        name.setText(contacted.getName());
+        //初始化为当前联系人的userId
+        String remarkName = contacted.getContactedId();
+
+        if(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null){
+            //当前用户给该联系人设置了name时
+            remarkName = ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName();
+        }else if(UsersBaseDao.searchByUserId(contacted.getContactedId()).getNickname() != null){
+            //该联系人给自己设置了昵称
+            remarkName = UsersBaseDao.searchByUserId(contacted.getContactedId()).getNickname();
+        }
+        name.setText(remarkName);
+
         //设置ID
         id = findViewById(R.id.contacted_info_tv_id);
         id.setText(contact.getContactedId());
@@ -78,7 +92,8 @@ public class ContactedInfoActivity extends AppCompatActivity {
             //跳转至聊天页面，所传值为当前联系人的userId
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ContactedInfoActivity.this, ChatActivity.class);
+                Intent intent = new Intent(
+                        ContactedInfoActivity.this, ChatActivity.class);
                 intent.putExtra(EaseConstant.EXTRA_USER_ID, contacted.getContactedId());
                 Log.e(TAG, "----------82" );
                 startActivity(intent);
@@ -91,7 +106,14 @@ public class ContactedInfoActivity extends AppCompatActivity {
             //跳转至修改备注页面
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ContactedInfoActivity.this, ChatActivity.class);
+                Intent intent = new Intent(
+                        ContactedInfoActivity.this, ModifyInfoActivity.class);
+                //
+                intent.putExtra("userId",contact.getUserId());
+                intent.putExtra("contactedId",contact.getContactedId());
+                startActivity(intent);
+                Log.e(TAG, "-----------------101");
+//                finish();
             }
         });
 

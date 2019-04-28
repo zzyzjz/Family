@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContactedInfoActivity"
+    tools:context=".ui.ContactedInfoActivity"
     android:orientation="vertical">
 
     <com.hyphenate.easeui.widget.EaseTitleBar
@@ -18,16 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="#cccccc"
-        android:layout_below="@id/info_title_bar"
+
         android:id="@+id/info_shadow"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/info_scroll"
-        android:layout_below="@id/info_shadow"
-        >
-        <ScrollView
+
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical">
@@ -226,7 +221,7 @@
             </LinearLayout>
 
         </ScrollView>
-    </LinearLayout>
 
 
-</RelativeLayout>
+
+</LinearLayout>

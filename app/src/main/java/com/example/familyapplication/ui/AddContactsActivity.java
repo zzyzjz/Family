@@ -33,7 +33,8 @@ public class AddContactsActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddContactsActivity.this,MainActivity.class));
+//                startActivity(new Intent(AddContactsActivity.this,MainActivity.class));
+                finish();
             }
         });
 

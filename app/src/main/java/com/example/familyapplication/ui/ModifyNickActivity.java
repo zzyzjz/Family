@@ -43,7 +43,8 @@ public class ModifyNickActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModifyNickActivity.this,MainActivity.class));
+//                startActivity(new Intent(ModifyNickActivity.this,MainActivity.class));
+                finish();
             }
         });
 
@@ -61,6 +62,8 @@ public class ModifyNickActivity extends AppCompatActivity {
                 user.setNickname(nick);
                 UsersBaseDao.update(user);
                 Log.e(TAG, "修改昵称成功------"+user.getUserId()+"---->"+nick );
+                Toast.makeText(ModifyNickActivity.this,"昵称修改成功！",Toast.LENGTH_SHORT).show();
+
 
                 Log.e(TAG, "---------------------65" );
                 List<Users> users = UsersBaseDao.searchAll();
@@ -73,6 +76,8 @@ public class ModifyNickActivity extends AppCompatActivity {
                     Log.e(TAG, "head ---> "+use.getHead() );
                 }
                 Log.e(TAG, "---------------------75" );
+
+                return;
             }
         });
 
