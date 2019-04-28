@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupActivity"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/contact_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@color/colorPrimary"
+        hyphenate:titleBarBackground="@color/colorPrimary"
+        hyphenate:titleBarTitle="群 组"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#cccccc" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_btn_creat"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_long"
+        android:text="新 建 群 组"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_btn_join"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_long"
+        android:text="加 入 群 组"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="我 的 群 组"
+        android:textSize="20sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#cccccc" />
+
+    <com.example.familyapplication.ListViewInScroll
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/group_lv"/>
+
+
+</LinearLayout>

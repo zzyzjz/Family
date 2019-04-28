@@ -38,9 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/contact_btn_add_friend"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/btn_long"
                 android:text="添 加 好 友"
 
                 />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contact_btn_group"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/btn_long"
+                android:text="我 的 群 组"/>
 
             <Button
                 android:layout_width="match_parent"

@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.example.familyapplication.Contacted;
 import com.example.familyapplication.FmlContactAdapter;
+import com.example.familyapplication.GroupActivity;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;
@@ -35,7 +36,7 @@ public class ContactFragment extends Fragment {
     private List<Contacted> contactedList = new ArrayList<Contacted>() ;
     //没有初始化，所以会报错NullPointerException
 
-    Button addUser,addContact,addFriend;
+    Button addUser,group,addContact,addFriend;
     ImageView iv;
 
     public ContactFragment(){}
@@ -109,6 +110,15 @@ public class ContactFragment extends Fragment {
                 //contactedId 为当前联系人的userId
                 startActivity(i);
 
+            }
+        });
+
+        //跳转到群组页面
+        group = getActivity().findViewById(R.id.contact_btn_group);
+        group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GroupActivity.class));
             }
         });
 

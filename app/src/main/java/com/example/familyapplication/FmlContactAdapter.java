@@ -34,8 +34,8 @@ public class FmlContactAdapter extends ArrayAdapter {
 //        Users user = (Users) getItem(position);
         Contacted contacted = (Contacted) getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
-        ImageView head = (ImageView) view.findViewById(R.id.contacted_head);//获取该布局内的图片视图
-        TextView name = (TextView) view.findViewById(R.id.contacted_name);//获取该布局内的文本视图
+        ImageView head = (ImageView) view.findViewById(R.id.item_head);//获取该布局内的图片视图
+        TextView name = (TextView) view.findViewById(R.id.item_name);//获取该布局内的文本视图
 //        head.setImageResource(user.getHead());//为图片视图设置图片资源
 //        head.setImageBitmap(BitmapFactory.decodeFile(user.getHead()));
 //        name.setText(user.getNickname());//为文本视图设置文本内容
