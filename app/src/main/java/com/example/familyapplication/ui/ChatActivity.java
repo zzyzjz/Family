@@ -38,14 +38,14 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        Log.e(TAG, "onItemClick: 37" );
+        Log.e(TAG, "onItemClick: 41" );
         setContentView(R.layout.activity_chat);
 
         activityInstance = this;
         //user or group id
         toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
-        chatFragment = new EaseChatFragment();
-        Log.e(TAG, "onItemClick: 44" );
+        chatFragment = new ChatFragment();
+        Log.e(TAG, "onItemClick: 48" );
         //set arguments
         chatFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.chat_list, chatFragment).commit();

@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import com.example.familyapplication.Contacted;
 import com.example.familyapplication.FmlContactAdapter;
-import com.example.familyapplication.GroupActivity;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;

@@ -92,28 +92,44 @@ public class MeFragment extends Fragment {
         head = getActivity().findViewById(R.id.me_iv_head);
         head.setImageResource(user.getHead());
 
-        nick = getActivity().findViewById(R.id.me_tv_nick);
-        if(!TextUtils.isEmpty(user.getNickname())){
-            nick.setText(user.getNickname());
-        }
-
-        id = getActivity().findViewById(R.id.me_tv_id);
-        id.setText(user.getUserId());
-
-        modifyHead = getActivity().findViewById(R.id.me_btn_modify_head);
-        modifyHead.setOnClickListener(new View.OnClickListener() {
+        head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ModifyHeadActivity.class));
             }
         });
 
-        modifyNick = getActivity().findViewById(R.id.me_btn_modify_nick);
-        modifyNick.setOnClickListener(new View.OnClickListener() {
+        nick = getActivity().findViewById(R.id.me_tv_nick);
+        if(!TextUtils.isEmpty(user.getNickname())){
+            nick.setText(user.getNickname());
+        }else {
+            nick.setText("");
+        }
+
+        nick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ModifyNickActivity.class));
             }
         });
+
+        id = getActivity().findViewById(R.id.me_tv_id);
+        id.setText(user.getUserId());
+
+//        modifyHead = getActivity().findViewById(R.id.me_btn_modify_head);
+//        modifyHead.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getActivity(), ModifyHeadActivity.class));
+//            }
+//        });
+
+//        modifyNick = getActivity().findViewById(R.id.me_btn_modify_nick);
+//        modifyNick.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getActivity(), ModifyNickActivity.class));
+//            }
+//        });
     }
 }

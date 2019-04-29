@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.familyapplication.R;
+import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
@@ -62,8 +63,7 @@ public class MessageFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-        Log.e(TAG, "conversation --->"+conversations.get("user1") );
-//        conversationss = conversations.get("user1");
+//        Log.e(TAG, "conversation --->"+conversations.get("user1") );
 
 //        for (EMConversation c:toList(conversations)){
 //            Log.e(TAG, "Conversation "+c.toString() );
@@ -77,42 +77,80 @@ public class MessageFragment extends Fragment {
         //刷新列表
         conversationListView.refresh();
 
-        Log.e(TAG, "Refresh Click Click Click" );
+//        Log.e(TAG, "Refresh Click Click Click" );
 
         conversationListFragment = new EaseConversationListFragment();
-        Log.e(TAG, "81 Click Click Click" );
+//        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+//
+//            @Override
+//            public void onListItemClicked(EMConversation conversation) {
+//                startActivity(new Intent(getActivity(), ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId()));
+//            }
+//        });
+//通过getSupportFragmentManager启动fragment即可
+//        Log.e(TAG, "81 Click Click Click" );
+
+//        conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                EMConversation conversation = conversationListView.getItem(position);
+//                String username = conversation.conversationId();
+//                Log.e(TAG, "onItemClick: 90" );
+//                if (username.equals(EMClient.getInstance().getCurrentUser()))
+//                    Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+//                else {
+//                    // start chat acitivity
+//                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+//                    Log.e(TAG, "onItemClick: 96" );
+//                    if(conversation.isGroup()){
+////                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+////                            // it's group chat
+////                            intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_CHATROOM);
+////                        }else{
+//                            intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
+////                        }
+//
+//                    }
+//                    // it's single chat
+//                    Log.e(TAG, "onItemClick: 107" );
+//                    intent.putExtra(EaseConstant.EXTRA_USER_ID, username);
+//                    Log.e(TAG, "onItemClick: 109" );
+//                    startActivity(intent);
+//                    Log.e(TAG, "onItemClick: 111" );
+//                }
+//            }
+//        });
 
         conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 EMConversation conversation = conversationListView.getItem(position);
                 String username = conversation.conversationId();
-                Log.e(TAG, "onItemClick: 90" );
+                Log.e(TAG, "-------131----------group -----"+conversation.isGroup() );
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
                 else {
                     // start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    Log.e(TAG, "onItemClick: 96" );
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
-                            // it's group chat
-                            intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_CHATROOM);
-                        }else{
+                    if(UsersBaseDao.searchByUserId(username) == null){
+                        Log.e(TAG, "-------138----------group -----"+conversation.isGroup() );
+//                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+//                            // it's group chat
+//                            intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_CHATROOM);
+//                        }else{
                             intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
-                        }
+//                        }
 
                     }
                     // it's single chat
-                    Log.e(TAG, "onItemClick: 107" );
                     intent.putExtra(EaseConstant.EXTRA_USER_ID, username);
-                    Log.e(TAG, "onItemClick: 109" );
                     startActivity(intent);
-                    Log.e(TAG, "onItemClick: 111" );
                 }
             }
         });
+
 
 //        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
 //

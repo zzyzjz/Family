@@ -51,7 +51,17 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'org.greenrobot:greendao:3.2.2'
 
+    // Google firebase cloud messaging
+    implementation 'com.google.android.gms:play-services-base:11.4.0'
+    implementation 'com.google.firebase:firebase-messaging:11.4.0'
+
     //implementation 'org.greenrobot:greendao-generator:3.2.2'
 //    debugImplementation 'com.amitshekhar.andro/id:debug-db:1.0.1'
     implementation project(':easeui')
 }
+
+//apply plugin: 'com.google.gms.google-services'
+//repositories {
+//    mavenCentral()
+//}
+
