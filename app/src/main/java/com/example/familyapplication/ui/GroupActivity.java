@@ -2,9 +2,7 @@ package com.example.familyapplication.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,17 +12,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.familyapplication.CreateGroupActivity;
 import com.example.familyapplication.FmlGroupAdapter;
 import com.example.familyapplication.JoinGroupActivity;
 import com.example.familyapplication.ListViewInScroll;
 import com.example.familyapplication.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
-import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
-import com.hyphenate.easeui.ui.EaseBaseActivity;
 
 import java.util.List;
 

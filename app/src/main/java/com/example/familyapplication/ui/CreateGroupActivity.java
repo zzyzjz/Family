@@ -1,19 +1,19 @@
-package com.example.familyapplication;
+package com.example.familyapplication.ui;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.familyapplication.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroupManager;
 import com.hyphenate.chat.EMGroupOptions;
-import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.exceptions.HyphenateException;
 
 public class CreateGroupActivity extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     return;
                 } else {
                     // select from contact list
-                    Intent i = new Intent(CreateGroupActivity.this,GroupPickContactsActivity.class);
+                    Intent i = new Intent(CreateGroupActivity.this, GroupPickContactsActivity.class);
                     i.putExtra("groupName",name);
                     startActivityForResult(i,0);
                 }
@@ -66,10 +66,14 @@ public class CreateGroupActivity extends AppCompatActivity {
                     final String groupName = groupNameEditText.getText().toString().trim();
 //                    String desc = introductionEditText.getText().toString();
                     String[] members = data.getStringArrayExtra("newmembers");
+                    Log.e(TAG, "create  membre:"+members);
                     try {
                         EMGroupOptions option = new EMGroupOptions();
                         option.maxUsers = 200;
-                        option.inviteNeedConfirm = true;
+                        //邀请对方入群是否经过对方同意
+                        option.inviteNeedConfirm = false;
+                        //公开群，任何人都能加入此群
+                        option.style = EMGroupManager.EMGroupStyle.EMGroupStylePublicOpenJoin;
 
 //                        String reason = CreateGroupActivity.this.getString(R.string.invite_join_group);
                         String reason = " ";
@@ -80,11 +84,13 @@ public class CreateGroupActivity extends AppCompatActivity {
 //                        }else{
 //                            option.style = memberCheckbox.isChecked()? EMGroupManager.EMGroupStyle.EMGroupStylePrivateMemberCanInvite: EMGroupManager.EMGroupStyle.EMGroupStylePrivateOnlyOwnerInvite;
 //                        }
+                        //members要一个string数组，大概是userId
                         EMClient.getInstance().groupManager().createGroup(groupName, "", members, reason, option);
                         runOnUiThread(new Runnable() {
                             public void run() {
 //                                progressDialog.dismiss();
                                 setResult(RESULT_OK);
+                                Toast.makeText(CreateGroupActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         });

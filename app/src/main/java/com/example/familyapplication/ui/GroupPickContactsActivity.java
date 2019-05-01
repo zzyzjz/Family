@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.familyapplication.GPContactAdapter;
+import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;
 import com.example.familyapplication.db.Users;
@@ -91,8 +93,11 @@ public class GroupPickContactsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<String> members = getToBeAddMeembers();
+
                 setResult(RESULT_OK,new Intent().putExtra(
                         "newmembers",members.toArray(new String[members.size()])));
+//                Log.e(TAG, "pick create  member:" +members.get(0));
+
                 finish();
             }
         });
@@ -101,11 +106,18 @@ public class GroupPickContactsActivity extends AppCompatActivity {
     private List<String> getToBeAddMeembers(){
         List<String> members = new ArrayList<String>();
         int length = pickContactAdapter.isCheckedArray.length;
-
+        Log.e(TAG, "members length -> "+length );
         for (int i = 0; i < length; i++) {
             String username = ((Users)pickContactAdapter.getItem(i)).getUserId();
-            if (pickContactAdapter.isCheckedArray[i] && !existMembers.contains(username)) {
-                members.add(username);
+            Log.e(TAG, "------110-----user name -> "+username);
+            Log.e(TAG, "------111-----isChecked -> "+pickContactAdapter.isCheckedArray[i]);
+            if (pickContactAdapter.isCheckedArray[i] ) {
+                Log.e(TAG, "------112-----user name -> "+username);
+                if(!existMembers.contains(username)){
+                    Log.e(TAG, "------114-----user name -> "+username);
+                    members.add(username);
+                }
+
             }
         }
 
@@ -126,7 +138,7 @@ public class GroupPickContactsActivity extends AppCompatActivity {
         }
     }
 
-    private class PickContactAdapter extends GPContactAdapter{
+    private class PickContactAdapter extends GPContactAdapter {
 
         private static final String TAG = "zjz-pick adapter";
 
@@ -142,31 +154,40 @@ public class GroupPickContactsActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
-            Log.e(TAG, "Pick Adapter ------125----- " );
+            Log.e(TAG, "Pick Adapter ------154----- " );
 
             final Users user = (Users) getItem(position);
+            Log.e(TAG, "------158--------user -> "+user.getUserId());
+            final CheckBox checkBox =  view.findViewById(R.id.checkBox);
+            ImageView avatarView =  view.findViewById(R.id.avatar);
+            TextView nameView =  view.findViewById(R.id.name);
 
-            final CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
-            ImageView avatarView = (ImageView) view.findViewById(R.id.avatar);
-            TextView nameView = (TextView) view.findViewById(R.id.name);
-
-            if (checkBox != null) {
+            if (checkBox != null) {//TODO: checkBox == null
 
                 checkBox.setButtonDrawable(R.drawable.checkbox_bg_selector);
-
+                Log.e(TAG, "------166--------check box  ");
 
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Log.e(TAG, "------171--------ckeck box checked -> ");
                         // check the exist members
                         if (existMembers.contains(user.getUserId())) {
                             isChecked = true;
                             checkBox.setChecked(true);
                         }
+                        Log.e(TAG, "------177--------ckeck box checked -> ");
                         isCheckedArray[position] = isChecked;
 
                     }
                 });
+//              checkBox.setOnClickListener(new View.OnClickListener() {
+////                    @Override
+////                    public void onClick(View v) {
+////                        Log.e(TAG, "------185--------ckeck box checked -> ");
+////                        isCheckedArray[position] = !isCheckedArray[position];
+////                    }
+////                });
                 // keep exist members checked
                 if (existMembers.contains(user.getUserId())) {
                     checkBox.setChecked(true);
