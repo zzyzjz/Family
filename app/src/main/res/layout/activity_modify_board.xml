@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.AddContactsActivity">
+    tools:context=".ModifyBoardActivity"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,13 +13,19 @@
         android:background="@color/colorPrimary"
         android:gravity="center_vertical" >
         //返回键
-        <include layout="@layout/ease_commom_back_btn" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="5dp"
+            android:id="@+id/modify_board_back"
+            android:src="@drawable/title_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="添加联系人"
+            android:text="留 言 板"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -27,20 +33,24 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="#cccccc" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="30dp"
-        android:hint="联系人的用户名"
-        android:id="@+id/add_friend_et_contacted_name"/>
-
+        android:id="@+id/modify_board_board"
+        android:hint="留言板..."
+        android:padding="5dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:background="@drawable/border_dark"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_contacts_btn_add"
-        android:text="添 加 联 系 人"
+        android:id="@+id/modify_board_modify"
+        android:text="保   存"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
         android:background="@drawable/btn_long"
         android:layout_marginHorizontal="20dp"/>
 

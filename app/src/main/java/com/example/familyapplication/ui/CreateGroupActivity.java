@@ -91,6 +91,7 @@ public class CreateGroupActivity extends AppCompatActivity {
 //                                progressDialog.dismiss();
                                 setResult(RESULT_OK);
                                 Toast.makeText(CreateGroupActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(CreateGroupActivity.this,GroupActivity.class));
                                 finish();
                             }
                         });

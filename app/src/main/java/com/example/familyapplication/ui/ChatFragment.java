@@ -121,8 +121,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public void onEnterToChatDetails() {
+        Log.e(TAG, "------124------onEnterToChatDetails:  " );
         if (chatType == EaseConstant.CHATTYPE_GROUP) {
             EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
+            Log.e(TAG, "------127------group name: "+group.getGroupName() );
             if (group == null) {
                 Toast.makeText(getActivity(), R.string.gorup_not_found, Toast.LENGTH_SHORT).show();
                 return;
@@ -130,9 +132,30 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 //            startActivityForResult(
 //                    (new Intent(getActivity(), GroupDetailActivity.class).putExtra("groupId", toChatUsername)),
 //                    REQUEST_CODE_GROUP_DETAIL);
-            startActivity(new Intent(getActivity(),GroupDetailActivity.class));
+
+            startActivity(new Intent(getActivity(),GroupDetailActivity.class)
+                    .putExtra("groupId", group.getGroupId()));
         }
 
+    }
+
+    @Override
+    protected void toGroupDetails() {
+        Log.e(TAG, "------144------toGroupDetails:  " );
+        if (chatType == EaseConstant.CHATTYPE_GROUP) {
+            EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
+            Log.e(TAG, "------147------group name: "+group.getGroupName() );
+            if (group == null) {
+                Toast.makeText(getActivity(), R.string.gorup_not_found, Toast.LENGTH_SHORT).show();
+                return;
+            }
+//            startActivityForResult(
+//                    (new Intent(getActivity(), GroupDetailActivity.class).putExtra("groupId", toChatUsername)),
+//                    REQUEST_CODE_GROUP_DETAIL);
+
+            startActivity(new Intent(getActivity(),GroupDetailActivity.class)
+                    .putExtra("groupId", group.getGroupId()));
+        }
     }
 
     @Override

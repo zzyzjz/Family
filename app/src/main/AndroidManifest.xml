@@ -25,8 +25,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.GroupPickContactsActivity"></activity>
-        <activity android:name=".JoinGroupActivity" />
+        <activity android:name=".ModifyBoardActivity"></activity>
+        <activity android:name=".ui.GroupPickContactsActivity" />
+        <activity android:name=".ui.JoinGroupActivity" />
         <activity android:name=".ui.GroupDetailActivity" />
         <activity android:name=".ui.CreateGroupActivity" />
         <activity android:name=".ui.GroupActivity" />

@@ -29,14 +29,14 @@ public class AddContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contacts);
 
-        back = findViewById(R.id.add_contacts_btn_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(AddContactsActivity.this,MainActivity.class));
-                finish();
-            }
-        });
+//        back = findViewById(R.id.add_contacts_btn_back);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(AddContactsActivity.this,MainActivity.class));
+//                finish();
+//            }
+//        });
 
         contactedName = findViewById(R.id.add_friend_et_contacted_name);
         addContact = findViewById(R.id.add_contacts_btn_add);
