@@ -40,7 +40,7 @@
                 android:id="@+id/contact_btn_add_friend"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/btn_long"
-                android:text="添 加 好 友"
+                android:text="添 加 联 系 人"
 
                 />
             <Button

@@ -40,7 +40,7 @@
         android:layout_marginHorizontal="20dp"
         android:id="@+id/modify_board_board"
         android:hint="留言板..."
-        android:padding="5dp"
+        android:padding="7dp"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         android:background="@drawable/border_dark"/>

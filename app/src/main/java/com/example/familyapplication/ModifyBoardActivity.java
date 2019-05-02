@@ -2,6 +2,7 @@ package com.example.familyapplication;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,20 +52,52 @@ public class ModifyBoardActivity extends AppCompatActivity {
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    EMClient.getInstance().groupManager()
-                            .updateGroupAnnouncement(groupId,board.getText().toString());
-                    Toast.makeText(ModifyBoardActivity.this,
-                            "留言板更新成功！",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(
-                            ModifyBoardActivity.this, GroupDetailActivity.class));
-                    finish();
-                } catch (HyphenateException e) {
-                    e.printStackTrace();
-                    Toast.makeText(ModifyBoardActivity.this,
-                            "留言板更新失败！",Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "留言板更新失败 -> e:"+e.toString() );
-                }
+
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            EMClient.getInstance().groupManager()
+                                    .updateGroupAnnouncement(groupId,board.getText().toString());
+                            Looper.prepare();
+                            Toast.makeText(ModifyBoardActivity.this,
+                                    "留言板更新成功！",Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+
+                        } catch (HyphenateException e) {
+                            e.printStackTrace();
+                            Looper.prepare();
+                            Toast.makeText(ModifyBoardActivity.this,
+                                    "留言板更新失败！",Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                            Log.e(TAG, "留言板更新失败 -> e:"+e.toString() );
+                            return;
+                        }
+                    }
+                }.start();
+
+
+//                try {
+//
+//                    EMClient.getInstance().groupManager()
+//                            .updateGroupAnnouncement(groupId,board.getText().toString());
+//
+//
+//                    startActivity(new Intent(
+//                            ModifyBoardActivity.this, GroupDetailActivity.class));
+//                    finish();
+//                } catch (HyphenateException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(ModifyBoardActivity.this,
+//                            "留言板更新失败！",Toast.LENGTH_SHORT).show();
+//                    Log.e(TAG, "留言板更新失败 -> e:"+e.toString() );
+//                }
+
+//                startActivity(new Intent(
+//                        ModifyBoardActivity.this, GroupDetailActivity.class)
+//                        .putExtra("groupId", group.getGroupId()));
+                finish();
             }
         });
     }
