@@ -1,21 +1,38 @@
 package com.example.familyapplication.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.familyapplication.Contacted;
+import com.example.familyapplication.GridViewInScroll;
 import com.example.familyapplication.ModifyBoardActivity;
+import com.example.familyapplication.ModifyGroupNameActivity;
 import com.example.familyapplication.R;
+import com.example.familyapplication.db.Contacts;
+import com.example.familyapplication.db.ContactsBaseDao;
+import com.example.familyapplication.db.Users;
+import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDetailActivity extends AppCompatActivity {
@@ -23,6 +40,15 @@ public class GroupDetailActivity extends AppCompatActivity {
     private static final String TAG = "zjz--group detail";
 
     private TextView groupName,board,id;
+    private Button exit;
+    private GridViewInScroll owner,members;
+
+    List<String> memberIdList = new ArrayList<String>();
+    List<Contacted> memberList = new ArrayList<Contacted>();
+    List<Contacted> ownerList = new ArrayList<>();
+
+
+    private MemberAdapter memberAdapter,ownerAdapter;
 
     private String groupId;
     private EMGroup group;
@@ -35,27 +61,24 @@ public class GroupDetailActivity extends AppCompatActivity {
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
 
-        try {
-            group = EMClient.getInstance().groupManager().getGroupFromServer(groupId);
-        } catch (HyphenateException e) {
-            e.printStackTrace();
-        }
-
         groupName = findViewById(R.id.group_detail_group_name);
         groupName.setText(group.getGroupName());
+        //点击组名进入更改组名页面
+        groupName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(
+                        GroupDetailActivity.this, ModifyGroupNameActivity.class)
+                        .putExtra("groupId",groupId));
+            }
+        });
 
         id = findViewById(R.id.group_detail_id);
         id.setText(group.getGroupId());
 
-//        try {
-//            EMClient.getInstance().groupManager().fetchGroupAnnouncement(groupId);
-//        } catch (HyphenateException e) {
-//            e.printStackTrace();
-//        }
 
         board = findViewById(R.id.group_detail_board);
-        board.setText(group.getAnnouncement());
-        Log.e(TAG, "group.getAnnouncement()" +group.getAnnouncement());
+
 
         updateGroup();
 
@@ -67,6 +90,35 @@ public class GroupDetailActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        exit = findViewById(R.id.group_detail_exit);
+        if(group.getOwner().equals(EMClient.getInstance().getCurrentUser())){
+            exit.setText("解散该群");
+        }else {
+            exit.setText("退出该群");
+        }
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(group.getOwner() .equals(EMClient.getInstance().getCurrentUser())){
+                    //解散群
+//                    dismissGroup();
+                    Toast.makeText(GroupDetailActivity.this,"解散",Toast.LENGTH_SHORT).show();
+                }else{
+                    //退出群
+//                    exitGroup();
+                    Toast.makeText(GroupDetailActivity.this,"退群",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        initOwner();
+        owner = findViewById(R.id.group_detail_owner);
+        ownerAdapter = new MemberAdapter(this,R.layout.item_grid,ownerList);
+        owner.setAdapter(ownerAdapter);
+
+        members = findViewById(R.id.group_detail_members);
+
     }
 
 
@@ -79,18 +131,20 @@ public class GroupDetailActivity extends AppCompatActivity {
                     try {
                         group = EMClient.getInstance().groupManager().getGroupFromServer(groupId);
 
+                        Log.e(TAG, "------------139---------- " );
 //                        adminList.clear();
 //                        adminList.addAll(group.getAdminList());
-//                        memberList.clear();
-//                        EMCursorResult<String> result = null;
-//                        do {
-//                            // page size set to 20 is convenient for testing, should be applied to big value
-//                            result = EMClient.getInstance().groupManager().fetchGroupMembers(groupId,
-//                                    result != null ? result.getCursor() : "",
-//                                    20);
-//                            EMLog.d(TAG, "fetchGroupMembers result.size:" + result.getData().size());
-//                            memberList.addAll(result.getData());
-//                        } while (result.getCursor() != null && !result.getCursor().isEmpty());
+                        memberIdList.clear();
+                        EMCursorResult<String> result = null;
+                        do {
+                            Log.e(TAG, "------------145---------- " );
+                            // page size set to 20 is convenient for testing, should be applied to big value
+                            result = EMClient.getInstance().groupManager().fetchGroupMembers(groupId,
+                                    result != null ? result.getCursor() : "",
+                                    20);
+                            Log.e(TAG, "fetchGroupMembers result.size:" + result.getData().size());
+                            memberIdList.addAll(result.getData());
+                        } while (result.getCursor() != null && !result.getCursor().isEmpty());
 //
 //                        muteList.clear();
 //                        muteList.addAll(EMClient.getInstance().groupManager().fetchGroupMuteList(groupId, 0, 200).keySet());
@@ -100,7 +154,7 @@ public class GroupDetailActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         //e.printStackTrace();  // User may have no permission for fetch mute, fetch black list operation
                     } finally {
-//                        memberList.remove(group.getOwner());
+                        memberIdList.remove(group.getOwner());
 //                        memberList.removeAll(adminList);
                     }
 
@@ -115,9 +169,17 @@ public class GroupDetailActivity extends AppCompatActivity {
 //                            refreshOwnerAdminAdapter();
 //                            refreshMembersAdapter();
 
+                            Log.e(TAG, "------------175----------" );
+                            Log.e(TAG, "member id list size -> "+memberIdList.size() );
+                            Log.e(TAG, "-----------177----------- " );
+                            initMembers();
+                            memberAdapter = new MemberAdapter(
+                                    GroupDetailActivity.this,R.layout.item_grid,memberList);
+                            members = findViewById(R.id.group_detail_members);
+                            members.setAdapter(memberAdapter);
 //							refreshUIVisibility();
-                            ((TextView) findViewById(R.id.group_detail_group_name)).setText(group.getGroupName() + "(" + group.getMemberCount()
-                                    + ")");
+                            ((TextView) findViewById(R.id.group_detail_group_name))
+                                    .setText(group.getGroupName() + "(" + group.getMemberCount() + ")");
 //                            loadingPB.setVisibility(View.INVISIBLE);
 
 //                            if (EMClient.getInstance().getCurrentUser().equals(group.getOwner())) {
@@ -155,15 +217,168 @@ public class GroupDetailActivity extends AppCompatActivity {
                     });
 
                 } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "---189---"+e.toString(),e );
+                }
+            }
+        }).start();
+
+    }
+
+
+
+    private void exitGroup() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    EMClient.getInstance().groupManager().leaveGroup(groupId);
                     runOnUiThread(new Runnable() {
                         public void run() {
-//                            loadingPB.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),
+                                    "退出群聊成功！", Toast.LENGTH_SHORT).show();
+
+                            setResult(RESULT_OK);
+                            finish();
+                            if(ChatActivity.activityInstance != null)
+                                ChatActivity.activityInstance.finish();
+                        }
+                    });
+                } catch (final Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(),
+                                    "退出群聊失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         }).start();
+    }
 
+
+    private void dismissGroup() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    EMClient.getInstance().groupManager().destroyGroup(groupId);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            Toast.makeText(GroupDetailActivity.this,
+                                    "解散群聊成功！",Toast.LENGTH_SHORT).show();
+
+                            setResult(RESULT_OK);
+                            finish();
+                            if(ChatActivity.activityInstance != null)
+                                ChatActivity.activityInstance.finish();
+                        }
+                    });
+                } catch (final Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            Toast.makeText(GroupDetailActivity.this,
+                                    "解散群聊失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private void initMembers(){
+        Log.e(TAG, "initMembers: " );
+
+        for(String id :memberIdList){
+
+            int image;
+            String name = id;//默认name为userId
+            Log.e(TAG, "------------------302`````member id --->"+id);
+            image = UsersBaseDao.searchByUserId(id).getHead();
+            Log.e(TAG, "---------304----------" );
+            if(!id.equals(EMClient.getInstance().getCurrentUser())
+                    && ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),id).getName() != null){
+                //该id不是当前用户id 且 当前用户给该联系人设置了name时
+                name = ContactsBaseDao.searchByUserIdAndContactedId
+                        (EMClient.getInstance().getCurrentUser(),id).getName();
+            }else if(UsersBaseDao.searchByUserId(id).getNickname() != null){
+                //该联系人给自己设置了昵称
+                name = UsersBaseDao.searchByUserId(id).getNickname();
+            }
+
+            Contacted contacted = new Contacted(id,name,image);
+            //id是该联系人的userId,name是这条item将要显示的名字，image是头像
+
+            memberList.add(contacted);
+
+        }
+
+
+        //从Contacts表获取当前用户的联系人
+        //根据联系人的id找到联系人的头像（User表）和联系人要显示的name（name -> nick -> userId）
+        //并整理成一个name和头像的list（String类型），保存在contactsList中
+    }
+
+    private void initOwner(){
+        Log.e(TAG, "initOwner: " );
+
+        String id = group.getOwner();
+
+        int image;
+        String name = id;//默认name为当前联系人的userId
+        Log.e(TAG, "------------------302`````member id --->"+id);
+        image = UsersBaseDao.searchByUserId(id).getHead();
+        Log.e(TAG, "---------304----------" );
+        if(!id.equals(EMClient.getInstance().getCurrentUser())
+                && ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),id).getName() != null){
+            //该id不是当前用户id 且 当前用户给该联系人设置了name时
+            name = ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),id).getName();
+        }else if(UsersBaseDao.searchByUserId(id).getNickname() != null){
+            //该联系人给自己设置了昵称
+            name = UsersBaseDao.searchByUserId(id).getNickname();
+        }
+
+        Contacted contacted = new Contacted(id,name,image);
+        //id是该联系人的userId,name是这条item将要显示的名字，image是头像
+
+        ownerList.add(contacted);
+
+    }
+
+    private class MemberAdapter extends ArrayAdapter {
+
+        private int res;
+
+        public MemberAdapter(Context context, int textViewResourceId, List<Contacted> objects) {
+            super(context, textViewResourceId, objects);
+            res = textViewResourceId;
+            Log.e(TAG, "MemberAdapter: 336" );
+        }
+
+        @Override
+        public View getView(int position,  View convertView,  ViewGroup parent) {
+            Log.e(TAG, "---------341--------- position"+position );
+
+            Contacted contacted = (Contacted) getItem(position);
+            Log.e(TAG, "--------344----------contacted"+contacted.getName() );
+            View view = LayoutInflater.from(getContext()).inflate(res, null);//实例化一个对象
+            ImageView head = view.findViewById(R.id.iv_avatar);//获取该布局内的图片视图
+            TextView name = view.findViewById(R.id.tv_name);//获取该布局内的文本视图
+            head.setImageResource(contacted.getImage());
+            name.setText(contacted.getName());
+            return view;
+
+
+        }
+
+//        @Override
+//        public int getCount() {
+//            return super.getCount() + 1;
+//        }
     }
 
 

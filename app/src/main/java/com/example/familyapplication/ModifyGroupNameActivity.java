@@ -1,7 +1,6 @@
 package com.example.familyapplication;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +16,10 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.exceptions.HyphenateException;
 
-public class ModifyBoardActivity extends AppCompatActivity {
+public class ModifyGroupNameActivity extends AppCompatActivity {
+    private static final String TAG="zjz--modify group name";
 
-    private static final String TAG="zjz--modify board";
-
-    private EditText board;
+    private EditText name;
     private ImageView back;
     private Button modify;
 
@@ -31,60 +29,59 @@ public class ModifyBoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_board);
+        setContentView(R.layout.activity_modify_group_name);
 
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
 
-        board = findViewById(R.id.modify_board_board);
-        board.setText(group.getAnnouncement());
+        name = findViewById(R.id.modify_group_name_et);
+        name.setText(group.getGroupName());
 
-        back = findViewById(R.id.modify_board_back);
+        back = findViewById(R.id.modify_group_name_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(
-                        ModifyBoardActivity.this, GroupDetailActivity.class));
+                        ModifyGroupNameActivity.this, GroupDetailActivity.class));
                 finish();
             }
         });
-        modify = findViewById(R.id.modify_board_modify);
+
+        modify = findViewById(R.id.modify_group_name_modify);
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    EMClient.getInstance().groupManager().changeGroupName(
+                            groupId,name.getText().toString().trim());
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
 
+                }
                 new Thread(){
                     @Override
                     public void run() {
                         super.run();
                         try {
-                            EMClient.getInstance().groupManager()
-                                    .updateGroupAnnouncement(groupId,board.getText().toString());
+                            EMClient.getInstance().groupManager().changeGroupName(
+                                    groupId,name.getText().toString().trim());
                             Looper.prepare();
-                            Toast.makeText(ModifyBoardActivity.this,
-                                    "留言板更新成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ModifyGroupNameActivity.this,
+                                    "群名更新成功！",Toast.LENGTH_SHORT).show();
                             Looper.loop();
 
                         } catch (HyphenateException e) {
                             e.printStackTrace();
                             Looper.prepare();
-                            Toast.makeText(ModifyBoardActivity.this,
-                                    "留言板更新失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ModifyGroupNameActivity.this,
+                                    "群名更新失败！",Toast.LENGTH_SHORT).show();
                             Looper.loop();
-                            Log.e(TAG, "留言板更新失败 -> e:"+e.toString() );
+                            Log.e(TAG, "群名更新失败 -> e:"+e.toString() );
                             return;
                         }
                     }
                 }.start();
-
-
-//                startActivity(new Intent(
-//                        ModifyBoardActivity.this, GroupDetailActivity.class)
-//                        .putExtra("groupId", group.getGroupId()));
-                finish();
             }
         });
     }
-
-
 }

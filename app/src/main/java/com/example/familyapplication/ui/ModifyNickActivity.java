@@ -39,16 +39,7 @@ public class ModifyNickActivity extends AppCompatActivity {
         }
 
 
-        back = findViewById(R.id.modify_nick_btn_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(ModifyNickActivity.this,MainActivity.class));
-                finish();
-            }
-        });
-
-        modify = findViewById(R.id.modify_nick_btn_modify);
+        modify = findViewById(R.id.modify_nick_modify);
         modify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

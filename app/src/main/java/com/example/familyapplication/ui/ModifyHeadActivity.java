@@ -25,5 +25,6 @@ public class ModifyHeadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_head);
 
         user = UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser());
+        //TODO:改头像 用GridViewInScroll
     }
 }
