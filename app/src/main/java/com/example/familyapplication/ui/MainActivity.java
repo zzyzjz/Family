@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.familyapplication.R;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.ui.EaseBaiduMapActivity;
+import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.EaseConversationList;
 
 
@@ -19,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected static final String TAG = "zzzzzjzMain";
 
-    private ContactFragment cf = new ContactFragment();
+//    private ContactFragment cf = new ContactFragment();
+
 
 
     private TextView mTextMessage;
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_address_list:
                     mTextMessage.setText(R.string.title_address_list);
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.main_view,cf).commit();
+                            .replace(R.id.main_view,new ContactFragment()).commit();
                     return true;
                 case R.id.navigation_me:
                     mTextMessage.setText(R.string.title_me);
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+
         EMClient.getInstance().chatManager().loadAllConversations();
         EMClient.getInstance().groupManager().loadAllGroups();
 
@@ -83,15 +89,20 @@ public class MainActivity extends AppCompatActivity {
         //enter main screen
         setContentView(R.layout.activity_main);
         if(savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.main_view,new PlaceholderFragment()).commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_view,new PlaceholderFragment()).commit();
+                    .add(R.id.main_view,new MessageFragment()).commit();
         }
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
+
+
 
 
 

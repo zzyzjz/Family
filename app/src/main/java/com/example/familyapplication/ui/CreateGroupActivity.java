@@ -51,14 +51,10 @@ public class CreateGroupActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String st1 = getResources().getString(R.string.Is_to_create_a_group_chat);
-        final String st2 = getResources().getString(R.string.Failed_to_create_groups);
+
+
         if (resultCode == RESULT_OK) {
             //new group
-//            progressDialog = new ProgressDialog(this);
-//            progressDialog.setMessage(st1);
-//            progressDialog.setCanceledOnTouchOutside(false);
-//            progressDialog.show();
 
             new Thread(new Runnable() {
                 @Override
@@ -99,7 +95,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             public void run() {
 //                                progressDialog.dismiss();
-                                Toast.makeText(CreateGroupActivity.this, st2 + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateGroupActivity.this, "创建失败：" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
                     }

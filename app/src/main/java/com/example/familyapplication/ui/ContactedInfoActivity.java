@@ -1,6 +1,7 @@
 package com.example.familyapplication.ui;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,13 +112,63 @@ public class ContactedInfoActivity extends AppCompatActivity {
                 //
                 intent.putExtra("userId",contact.getUserId());
                 intent.putExtra("contactedId",contact.getContactedId());
-                startActivity(intent);
+                startActivityForResult(intent,0);
                 Log.e(TAG, "-----------------101");
 //                finish();
             }
         });
 
+    }
 
+    public void update(){
+        //contact 为当前用户对该联系人的备注
+        contact = ContactsBaseDao.searchByUserIdAndContactedId(me,contacted.getContactedId());
+        //user为被选中联系人
+//        user = UsersBaseDao.searchByUserId(contactedId);
+        //设置头像
+        head = findViewById(R.id.contacted_info_iv_head);
+        head.setImageResource(contacted.getImage());
 
+        //设置name,若修改，需显示修改后的，所以name要从数据库获取
+        name = findViewById(R.id.contacted_info_tv_name);
+        //初始化为当前联系人的userId
+        String remarkName = contacted.getContactedId();
+
+        if(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null){
+            //当前用户给该联系人设置了name时
+            remarkName = ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName();
+        }else if(UsersBaseDao.searchByUserId(contacted.getContactedId()).getNickname() != null){
+            //该联系人给自己设置了昵称
+            remarkName = UsersBaseDao.searchByUserId(contacted.getContactedId()).getNickname();
+        }
+        name.setText(remarkName);
+
+        //设置ID
+        id = findViewById(R.id.contacted_info_tv_id);
+        id.setText(contact.getContactedId());
+        //设置生日
+        birth = findViewById(R.id.contacted_info_tv_birth);
+        birth.setText(contact.getBirthday());
+        //设置TEL
+        tel = findViewById(R.id.contacted_info_tv_tel);
+        tel.setText(contact.getTel());
+        //设置最近通话
+        callTime = findViewById(R.id.contacted_info_tv_call);
+        callTime.setText(contact.getLastCallTime());
+        //设置最近体检
+        inspectTime = findViewById(R.id.contacted_info_tv_inspect);
+        inspectTime.setText(contact.getLastInspectTime());
+        //设置备注板
+        remarks = findViewById(R.id.contacted_info_tv_remarks);
+        remarks.setText(contact.getRemarks());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        update();
     }
 }

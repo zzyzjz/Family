@@ -16,12 +16,15 @@ import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
 
 
     private static final String TAG = "zzzzzjz--ChatFragment";
+
+
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -157,6 +160,34 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                     .putExtra("groupId", group.getGroupId()));
         }
     }
+
+//    class MyItemClickListener implements EaseChatExtendMenu.EaseChatExtendMenuItemClickListener{
+//
+//        @Override
+//        public void onClick(int itemId, View view) {
+////            if(chatFragmentHelper != null){
+////                if(chatFragmentHelper.onExtendMenuItemClick(itemId, view)){
+////                    return;
+////                }
+////            }
+//            switch (itemId) {
+//                case ITEM_TAKE_PICTURE:
+////                    selectPicFromCamera();
+//                    Toast.makeText(getActivity(), "take picture!", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case ITEM_PICTURE:
+////                    selectPicFromLocal();
+//                    break;
+//                case ITEM_LOCATION:
+////                    startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
+//                    break;
+//
+//                default:
+//                    break;
+//            }
+//        }
+//
+//    }
 
     @Override
     public void onAvatarClick(String username) {

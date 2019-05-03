@@ -95,7 +95,7 @@ public class MeFragment extends Fragment {
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ModifyHeadActivity.class));
+                startActivityForResult(new Intent(getActivity(), ModifyHeadActivity.class),0);
             }
         });
 
@@ -109,7 +109,7 @@ public class MeFragment extends Fragment {
         nick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ModifyNickActivity.class));
+                startActivityForResult(new Intent(getActivity(), ModifyNickActivity.class),1);
             }
         });
 
@@ -132,4 +132,77 @@ public class MeFragment extends Fragment {
 //            }
 //        });
     }
+
+    public void update(){
+        logout = getActivity().findViewById(R.id.me_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EMClient.getInstance().logout(true, new EMCallBack() {
+
+                    @Override
+                    public void onSuccess() {
+                        // TODO Auto-generated method stub
+                        Log.e(TAG, "退出登录成功···"+EMClient.getInstance().getCurrentUser() );
+                        startActivity(new Intent(getActivity(),LoginActivity.class));
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+                        // TODO Auto-generated method stub
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        // TODO Auto-generated method stub
+                        Log.e(TAG, "退出登录失败···"+EMClient.getInstance().getCurrentUser() );
+                        Log.e(TAG, "退出登录失败···"+message );
+                    }
+                });
+            }
+        });
+
+        user = UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser());
+
+        head = getActivity().findViewById(R.id.me_iv_head);
+        head.setImageResource(user.getHead());
+
+        head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getActivity(), ModifyHeadActivity.class),0);
+            }
+        });
+
+        nick = getActivity().findViewById(R.id.me_tv_nick);
+        if(!TextUtils.isEmpty(user.getNickname())){
+            nick.setText(user.getNickname());
+        }else {
+            nick.setText("");
+        }
+
+        nick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getActivity(), ModifyNickActivity.class),1);
+            }
+        });
+
+        id = getActivity().findViewById(R.id.me_tv_id);
+        id.setText(user.getUserId());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        update();
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        update();
+//    }
 }

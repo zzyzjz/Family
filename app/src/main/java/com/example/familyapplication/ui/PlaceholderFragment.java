@@ -40,7 +40,8 @@ public class PlaceholderFragment extends Fragment {
 //        //刷新列表
 //        conversationListView.refresh();
 
-        View rootView = inflater.inflate(R.layout.fragment_message,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_me,container,false);
+//        new MeFragment().update();
         //inflate(R.layout.item,parent,false)
         //把item加入到parent视图中
 

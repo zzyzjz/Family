@@ -2,6 +2,7 @@ package com.example.familyapplication.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     private static final String TAG = "zjz--group detail";
 
     private TextView groupName,board,id;
-    private Button exit;
+    private Button exit,addMember;
     private GridViewInScroll owner,members;
 
     List<String> memberIdList = new ArrayList<String>();
@@ -58,6 +59,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
+
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
 
@@ -70,6 +72,20 @@ public class GroupDetailActivity extends AppCompatActivity {
                 startActivity(new Intent(
                         GroupDetailActivity.this, ModifyGroupNameActivity.class)
                         .putExtra("groupId",groupId));
+            }
+        });
+
+        //群加人
+        addMember = findViewById(R.id.group_detail_add);
+        addMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivityForResult((new Intent(
+                        GroupDetailActivity.this, GroupPickContactsActivity.class)
+                        .putExtra("groupId", groupId)),0);
+
+
             }
         });
 
@@ -87,7 +103,8 @@ public class GroupDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(GroupDetailActivity.this, ModifyBoardActivity.class);
                 i.putExtra("groupId",group.getGroupId());
-                startActivity(i);
+                startActivityForResult(i,1);
+
             }
         });
 
@@ -121,6 +138,53 @@ public class GroupDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0){
+
+            final String[] newmembers = data.getStringArrayExtra("newmembers");
+
+            addMembersToGroup(newmembers);
+        }
+        if(requestCode == 1){
+            updateGroup();
+        }
+    }
+
+    private void addMembersToGroup(final String[] newmembers) {
+//        final String st6 = getResources().getString(R.string.Add_group_members_fail);
+        new Thread(new Runnable() {
+
+            public void run() {
+                try {
+                    // 创建者调用add方法
+                    if (EMClient.getInstance().getCurrentUser().equals(group.getOwner())) {
+                        EMClient.getInstance().groupManager().addUsersToGroup(groupId, newmembers);
+                    } else {
+                        // 一般成员调用invite方法
+                        EMClient.getInstance().groupManager().inviteUser(groupId, newmembers, null);
+                    }
+                    updateGroup();
+//                    refreshMembersAdapter();
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            ((TextView) findViewById(R.id.group_detail_group_name))
+//                                    .setText(group.getGroupName() + "(" + group.getMemberCount() + ")");
+////                            progressDialog.dismiss();
+//                        }
+//                    });
+                } catch (final Exception e) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+//                            progressDialog.dismiss();
+                            Toast.makeText(GroupDetailActivity.this, "添加成员失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 
     protected void updateGroup() {
         new Thread(new Runnable() {
@@ -172,6 +236,7 @@ public class GroupDetailActivity extends AppCompatActivity {
                             Log.e(TAG, "------------175----------" );
                             Log.e(TAG, "member id list size -> "+memberIdList.size() );
                             Log.e(TAG, "-----------177----------- " );
+
                             initMembers();
                             memberAdapter = new MemberAdapter(
                                     GroupDetailActivity.this,R.layout.item_grid,memberList);
@@ -290,6 +355,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     private void initMembers(){
         Log.e(TAG, "initMembers: " );
 
+        memberList.clear();
         for(String id :memberIdList){
 
             int image;
