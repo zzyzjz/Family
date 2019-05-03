@@ -55,10 +55,16 @@
         android:layout_height="3dp"
         android:background="#cccccc" />
 
-    <com.example.familyapplication.ListViewInScroll
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/group_lv"/>
+        android:scrollbars="vertical">
+        <com.example.familyapplication.ListViewInScroll
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/group_lv"/>
+    </ScrollView>
+
 
 
 </LinearLayout>

@@ -119,12 +119,12 @@ public class GroupDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(group.getOwner() .equals(EMClient.getInstance().getCurrentUser())){
                     //解散群
-//                    dismissGroup();
-                    Toast.makeText(GroupDetailActivity.this,"解散",Toast.LENGTH_SHORT).show();
+                    dismissGroup();
+//                    Toast.makeText(GroupDetailActivity.this,"解散",Toast.LENGTH_SHORT).show();
                 }else{
                     //退出群
-//                    exitGroup();
-                    Toast.makeText(GroupDetailActivity.this,"退群",Toast.LENGTH_SHORT).show();
+                    exitGroup();
+//                    Toast.makeText(GroupDetailActivity.this,"退群",Toast.LENGTH_SHORT).show();
                 }
             }
         });

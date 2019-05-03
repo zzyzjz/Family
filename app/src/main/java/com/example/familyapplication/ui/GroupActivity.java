@@ -2,6 +2,7 @@ package com.example.familyapplication.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +46,8 @@ public class GroupActivity extends FragmentActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GroupActivity.this, CreateGroupActivity.class));
+                startActivityForResult(new Intent(
+                        GroupActivity.this, CreateGroupActivity.class),0);
             }
         });
 
@@ -53,7 +55,8 @@ public class GroupActivity extends FragmentActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GroupActivity.this, JoinGroupActivity.class));
+                startActivityForResult(new Intent(
+                        GroupActivity.this, JoinGroupActivity.class),1);
             }
         });
 
@@ -94,7 +97,7 @@ public class GroupActivity extends FragmentActivity {
                 //传chat的类型为群聊
                 i.putExtra("chatType",EaseConstant.CHATTYPE_GROUP);
                 Log.e(TAG, "----------83-----group chat" );
-                startActivity(i);
+                startActivityForResult(i,2);
 
             }
         });
@@ -102,10 +105,19 @@ public class GroupActivity extends FragmentActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        update();
+    }
 
+    public void update(){
+        final List<EMGroup> grouplist = EMClient.getInstance().groupManager().getAllGroups();
+        final FmlGroupAdapter adapter = new FmlGroupAdapter(GroupActivity.this,R.layout.item_group,grouplist);
 
-
-
+        final ListView listView = findViewById(R.id.group_lv);
+        listView.setAdapter(adapter);
+    }
 
     @Override
     protected void onResume() {
