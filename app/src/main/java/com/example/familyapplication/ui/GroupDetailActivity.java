@@ -2,7 +2,6 @@ package com.example.familyapplication.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,26 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.familyapplication.Contacted;
 import com.example.familyapplication.GridViewInScroll;
-import com.example.familyapplication.ModifyBoardActivity;
-import com.example.familyapplication.ModifyGroupNameActivity;
 import com.example.familyapplication.R;
-import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;
-import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroup;
-import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
-import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;

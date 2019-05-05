@@ -297,10 +297,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
-                EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
-                if (user != null) {
-                    titleBar.setTitle(user.getNickname());
-                }
+//                EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
+//                if (user != null) {
+//                    titleBar.setTitle(user.getNickname());
+//                }
             }
             titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
         } else {
@@ -806,10 +806,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             return;
         }
         EaseAtMessageHelper.get().addAtUser(username);
-        EaseUser user = EaseUserUtils.getUserInfo(username);
-        if (user != null){
-            username = user.getNickname();
-        }
+//        EaseUser user = EaseUserUtils.getUserInfo(username);
+//        if (user != null){
+//            username = user.getNickname();
+//        }
         if(autoAddAtSymbol)
             inputMenu.insertText("@" + username + " ");
         else

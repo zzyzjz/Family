@@ -91,6 +91,7 @@ public class EaseMessageAdapter extends BaseAdapter{
 		this.conversation = EMClient.getInstance().chatManager().getConversation(username, EaseCommonUtils.getConversationType(chatType), true);
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		private void refreshList() {
 			// you should not call getAllMessages() in UI thread

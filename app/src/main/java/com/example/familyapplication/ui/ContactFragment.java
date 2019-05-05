@@ -205,7 +205,8 @@ public class ContactFragment extends Fragment {
             Log.e(TAG, "------------------178`````contacted id --->"+id);
             image = UsersBaseDao.searchByUserId(id).getHead();
             Log.e(TAG, "---------180----------" );
-            if(ContactsBaseDao.searchByUserIdAndContactedId
+            if(!id.equals(EMClient.getInstance().getCurrentUser())
+                    && ContactsBaseDao.searchByUserIdAndContactedId
                     (EMClient.getInstance().getCurrentUser(),id).getName() != null){
                 //当前用户给该联系人设置了name时
                 name = ContactsBaseDao.searchByUserIdAndContactedId
@@ -278,27 +279,27 @@ public class ContactFragment extends Fragment {
             Log.e(TAG, "remark ---> "+con.getRemarks() );
         }
         Log.e(TAG, "-------------------252" );
-//        ContactsBaseDao.deleteAll();
+        ContactsBaseDao.deleteAll();
 //
 //        Contacts c1 = new Contacts(null,"user1","user2","小可爱1-2","12-28",
 //                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
 //
 //        ContactsBaseDao.insert(c1);
-
+//
 //        Contacts c2 = new Contacts(null,"user3","user2","小可爱3-2","12-28",
 //                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
 //
 //        ContactsBaseDao.insert(c2);
 
-//        Contacts c3 = new Contacts(null,"user2","user1",null,"12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
+        Contacts c3 = new Contacts(null,"user2","user1",null,"12-28",
+                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
+
+        ContactsBaseDao.insert(c3);
 //
-//        ContactsBaseDao.insert(c3);
-//
-//        Contacts c4 = new Contacts(null,"user2","user3","机智的小可爱2-3","12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
-//
-//        ContactsBaseDao.insert(c4);
+        Contacts c4 = new Contacts(null,"user2","user3","机智的小可爱2-3","12-28",
+                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
+
+        ContactsBaseDao.insert(c4);
 //        Contacts c5 = new Contacts(null,"user2","user4",null,"12-28",
 //                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
 //

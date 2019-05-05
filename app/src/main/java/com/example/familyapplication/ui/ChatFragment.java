@@ -8,14 +8,16 @@ import android.widget.Toast;
 
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.ContactsBaseDao;
+import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.easeui.utils.EaseUserUtils;
+//import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatExtendMenu;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
@@ -102,7 +104,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
 
         Log.e(TAG, "---------180----------" );
-        if(ContactsBaseDao.searchByUserIdAndContactedId
+        if(!name.equals(EMClient.getInstance().getCurrentUser())
+                && ContactsBaseDao.searchByUserIdAndContactedId
                 (EMClient.getInstance().getCurrentUser(),chatUserId).getName() != null){
             //当前用户给该联系人设置了name时
             name = ContactsBaseDao.searchByUserIdAndContactedId
@@ -159,6 +162,23 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             startActivity(new Intent(getActivity(),GroupDetailActivity.class)
                     .putExtra("groupId", group.getGroupId()));
         }
+    }
+    @Override
+    protected void inputAtUsername(String username, boolean autoAddAtSymbol){
+        if(EMClient.getInstance().getCurrentUser().equals(username) ||
+                chatType != EaseConstant.CHATTYPE_GROUP){
+            return;
+        }
+        EaseAtMessageHelper.get().addAtUser(username);
+//        EaseUser user = EaseUserUtils.getUserInfo(username);
+        Users user = UsersBaseDao.searchByUserId(username);
+        if (user != null){
+            username = user.getNickname();
+        }
+        if(autoAddAtSymbol)
+            inputMenu.insertText("@" + username + " ");
+        else
+            inputMenu.insertText(username + " ");
     }
 
 //    class MyItemClickListener implements EaseChatExtendMenu.EaseChatExtendMenuItemClickListener{

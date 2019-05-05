@@ -1,10 +1,7 @@
 package com.example.familyapplication.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,29 +11,28 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.familyapplication.ConversationList;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseBaseFragment;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
-import com.hyphenate.easeui.widget.EaseConversationList;
+//import com.hyphenate.easeui.ui.EaseConversationListFragment;
+//import com.hyphenate.easeui.widget.EaseConversationList;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 
 public class MessageFragment extends Fragment {
     private String TAG = "zzzzzjz_Message";
 
-    private EaseConversationList conversationListView;
+    private ConversationList conversationListView;
+//    private EaseConversationList conversationListView;
 
-    private EaseConversationListFragment conversationListFragment;
+    private ConversationListFragment conversationListFragment;
+//    private EaseConversationListFragment conversationListFragment;
 
     public MessageFragment(){
 
@@ -81,7 +77,8 @@ public class MessageFragment extends Fragment {
 
 //        Log.e(TAG, "Refresh Click Click Click" );
 
-        conversationListFragment = new EaseConversationListFragment();
+        conversationListFragment = new ConversationListFragment();
+//        conversationListFragment = new EaseConversationListFragment();
 //        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
 //
 //            @Override
@@ -148,7 +145,7 @@ public class MessageFragment extends Fragment {
                     }
                     // it's single chat
                     intent.putExtra(EaseConstant.EXTRA_USER_ID, username);
-                    startActivity(intent);
+                    startActivityForResult(intent,0);
                 }
             }
         });
@@ -207,12 +204,33 @@ public class MessageFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+//        Log.e(TAG, "conversation --->"+conversations.get("user1") );
+
+//        for (EMConversation c:toList(conversations)){
+//            Log.e(TAG, "Conversation "+c.toString() );
+//        }
+
+
+        //会话列表控件
+        conversationListView = getActivity().findViewById(R.id.message_list);
+        //初始化，参数为会话列表集合
+        conversationListView.init(toList(conversations));
+        //刷新列表
+        conversationListView.refresh();
+    }
+
     public List<EMConversation> toList(Map<String, EMConversation> conversations){
         List<EMConversation> lc = new ArrayList<EMConversation>() ;
 
         for(EMConversation c : conversations.values()){
             lc.add(c);
         }
+        Log.e(TAG, "------237-----toList: "+lc.size() );
+        Log.e(TAG, "------237-----toList: "+lc.get(0) );
         return lc;
     }
 }

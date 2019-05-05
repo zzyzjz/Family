@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.familyapplication">
     <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -10,6 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -24,10 +26,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
-        <activity android:name=".ModifyGroupNameActivity"/>
-        <activity android:name=".ModifyBoardActivity" />
+        <activity android:name=".ui.ModifyGroupNameActivity"/>
+        <activity android:name=".ui.ModifyBoardActivity" />
         <activity android:name=".ui.GroupPickContactsActivity" />
         <activity android:name=".ui.JoinGroupActivity" />
         <activity android:name=".ui.GroupDetailActivity" />
@@ -51,10 +55,23 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 设置环信应用的AppKey -->
+        </activity>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+
+            android:value="BE:9F:9C:52:BB:6A:AB:19:B0:09:FB:40:92:1E:C2:64:42:B5:92:51;com.example.familyapplication"
+            />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
+        <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1106190331019987#family1" /> <!-- 声明SDK所需的service SDK核心功能 -->
+            android:value="1106190331019987#family1" />
+        <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
