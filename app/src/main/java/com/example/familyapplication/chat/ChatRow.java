@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.chatrow;
+package com.example.familyapplication.chat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,24 +13,26 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.familyapplication.list.ChatMessageList;
+import com.example.familyapplication.adapter.MessageAdapter;
+import com.example.familyapplication.R;
+import com.example.familyapplication.db.ContactsBaseDao;
+import com.example.familyapplication.db.Users;
+import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.easeui.EaseUI;
-import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.hyphenate.easeui.widget.EaseChatMessageList;
-import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
 
 import java.util.Date;
 
-public abstract class EaseChatRow extends LinearLayout {
-    public interface EaseChatRowActionCallback {
+public abstract class ChatRow extends LinearLayout {
+
+
+    public interface ChatRowActionCallback {
         void onResendClick(EMMessage message);
 
         void onBubbleClick(EMMessage message);
@@ -38,7 +40,7 @@ public abstract class EaseChatRow extends LinearLayout {
         void onDetachedFromWindow();
     }
 
-    protected static final String TAG = EaseChatRow.class.getSimpleName();
+    protected static final String TAG = "zjz Chat Row";
 
     protected LayoutInflater inflater;
     protected Context context;
@@ -59,12 +61,12 @@ public abstract class EaseChatRow extends LinearLayout {
     protected TextView ackedView;
     protected TextView deliveredView;
 
-    protected MessageListItemClickListener itemClickListener;
+    protected ChatMessageList.MessageListItemClickListener itemClickListener;
     protected EaseMessageListItemStyle itemStyle;
 
-    private EaseChatRowActionCallback itemActionCallback;
+    private ChatRowActionCallback itemActionCallback;
 
-    public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+    public ChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context);
         this.context = context;
         this.message = message;
@@ -108,13 +110,13 @@ public abstract class EaseChatRow extends LinearLayout {
 
     /**
      * set property according message and postion
-     * 
+     *
      * @param message
      * @param position
      */
     public void setUpView(EMMessage message, int position,
-            EaseChatMessageList.MessageListItemClickListener itemClickListener,
-                          EaseChatRowActionCallback itemActionCallback,
+                          ChatMessageList.MessageListItemClickListener itemClickListener,
+                          ChatRowActionCallback itemActionCallback,
                           EaseMessageListItemStyle itemStyle) {
         this.message = message;
         this.position = position;
@@ -128,14 +130,14 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void setUpBaseView() {
-    	// set nickname, avatar and background of bubble
+        // set nickname, avatar and background of bubble
         TextView timestamp = (TextView) findViewById(R.id.timestamp);
         if (timestamp != null) {
             if (position == 0) {
                 timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
                 timestamp.setVisibility(View.VISIBLE);
             } else {
-            	// show time stamp if interval with last message is > 30 seconds
+                // show time stamp if interval with last message is > 30 seconds
                 EMMessage prevMessage = (EMMessage) adapter.getItem(position - 1);
                 if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
                     timestamp.setVisibility(View.GONE);
@@ -147,11 +149,11 @@ public abstract class EaseChatRow extends LinearLayout {
         }
         if(userAvatarView != null) {
             //set nickname and avatar
-            if (message.direct() == Direct.SEND) {
-//                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+            if (message.direct() == EMMessage.Direct.SEND) {
+                setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
             } else {
-//                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
-                EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+                setUserAvatar(context, message.getFrom(), userAvatarView);
+                setUserNick(message.getFrom(), usernickView);
             }
         }
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
@@ -203,13 +205,13 @@ public abstract class EaseChatRow extends LinearLayout {
                     usernickView.setVisibility(View.GONE);
             }
             if (bubbleLayout != null) {
-                if (message.direct() == Direct.SEND) {
+                if (message.direct() == EMMessage.Direct.SEND) {
                     if (itemStyle.getMyBubbleBg() != null) {
-                        bubbleLayout.setBackground(((EaseMessageAdapter) adapter).getMyBubbleBg());
+                        bubbleLayout.setBackground(((MessageAdapter) adapter).getMyBubbleBg());
                     }
-                } else if (message.direct() == Direct.RECEIVE) {
+                } else if (message.direct() == EMMessage.Direct.RECEIVE) {
                     if (itemStyle.getOtherBubbleBg() != null) {
-                        bubbleLayout.setBackground(((EaseMessageAdapter) adapter).getOtherBubbleBg());
+                        bubbleLayout.setBackground(((MessageAdapter) adapter).getOtherBubbleBg());
                     }
                 }
             }
@@ -220,12 +222,67 @@ public abstract class EaseChatRow extends LinearLayout {
 
 
 
+    public static String getUserNick(String userId){
+        Users user = UsersBaseDao.searchByUserId(userId);
+        String nick = userId;
+
+        if(!userId.equals(EMClient.getInstance().getCurrentUser())
+                && ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),userId).getName() != null){
+            //当前用户给该联系人设置了name时
+            nick = ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),userId).getName();
+        }else if(UsersBaseDao.searchByUserId(userId).getNickname() != null){
+            //该联系人给自己设置了昵称
+            nick = UsersBaseDao.searchByUserId(userId).getNickname();
+        }
+
+        Log.e(TAG, "------213-----getUserNick: ->"+nick );
+        return nick;
+    }
+
+    public static Users getUserInfo(String userId){
+        Users user = UsersBaseDao.searchByUserId(userId);
+        return user;
+    }
+
+    public static void setUserAvatar(Context context, String username, ImageView imageView){
+        Users user = getUserInfo(username);
+        if(user != null){ //&& user.getHead() != null){
+            try {
+//                int avatarResId = Integer.parseInt(user.getAvatar());
+                int avatarResId = user.getHead();
+                Glide.with(context).load(avatarResId).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(user.getHead()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.head).into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.head).into(imageView);
+        }
+    }
+
+    /**
+     * set user's nickname
+     */
+    public static void setUserNick(String username,TextView textView){
+        if(textView != null){
+            Users user = getUserInfo(username);
+            if(user != null && user.getNickname() != null){
+//                textView.setText(user.getNickname());
+                textView.setText(getUserNick(username));
+            }else{
+                textView.setText(username);
+            }
+        }
+    }
+
 
 
     private void setClickListener() {
         if(bubbleLayout != null){
             bubbleLayout.setOnClickListener(new OnClickListener() {
-    
+
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null && itemClickListener.onBubbleClick(message)){
@@ -236,9 +293,9 @@ public abstract class EaseChatRow extends LinearLayout {
                     }
                 }
             });
-    
+
             bubbleLayout.setOnLongClickListener(new OnLongClickListener() {
-    
+
                 @Override
                 public boolean onLongClick(View v) {
                     if (itemClickListener != null) {
@@ -266,11 +323,11 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if(userAvatarView != null){
             userAvatarView.setOnClickListener(new OnClickListener() {
-    
+
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
-                        if (message.direct() == Direct.SEND) {
+                        if (message.direct() == EMMessage.Direct.SEND) {
                             itemClickListener.onUserAvatarClick(EMClient.getInstance().getCurrentUser());
                         } else {
                             itemClickListener.onUserAvatarClick(message.getFrom());
@@ -279,11 +336,11 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             });
             userAvatarView.setOnLongClickListener(new OnLongClickListener() {
-                
+
                 @Override
                 public boolean onLongClick(View v) {
                     if(itemClickListener != null){
-                        if (message.direct() == Direct.SEND) {
+                        if (message.direct() == EMMessage.Direct.SEND) {
                             itemClickListener.onUserAvatarLongClick(EMClient.getInstance().getCurrentUser());
                         } else {
                             itemClickListener.onUserAvatarLongClick(message.getFrom());
@@ -310,7 +367,9 @@ public abstract class EaseChatRow extends LinearLayout {
 
     /**
      * setup view
-     * 
+     *
      */
     protected abstract void onSetUpView();
+
+
 }

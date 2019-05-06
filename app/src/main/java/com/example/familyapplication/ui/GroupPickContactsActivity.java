@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.familyapplication.GPContactAdapter;
+import com.example.familyapplication.adapter.GPContactAdapter;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;

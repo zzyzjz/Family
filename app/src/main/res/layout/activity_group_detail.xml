@@ -58,7 +58,7 @@
         android:text="群主"
         android:layout_marginVertical="2dp"
         />
-    <com.example.familyapplication.GridViewInScroll
+    <com.example.familyapplication.list.GridViewInScroll
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/group_detail_owner"
@@ -78,7 +78,7 @@
         android:text="群成员"
         android:layout_marginVertical="2dp"
         />
-    <com.example.familyapplication.GridViewInScroll
+    <com.example.familyapplication.list.GridViewInScroll
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/group_detail_members"

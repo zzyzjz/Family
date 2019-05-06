@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.example.familyapplication.ConversationList;
+import com.example.familyapplication.list.ConversationList;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;

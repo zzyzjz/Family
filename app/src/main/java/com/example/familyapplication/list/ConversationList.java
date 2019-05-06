@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.list;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,10 +8,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.example.familyapplication.R;
+import com.example.familyapplication.adapter.ConversationAdapter;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.adapter.EaseConversationAdapter;
-import com.hyphenate.easeui.widget.EaseConversationList;
 
 import java.util.ArrayList;
 import java.util.List;

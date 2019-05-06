@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.familyapplication.Contacted;
-import com.example.familyapplication.GridViewInScroll;
+import com.example.familyapplication.list.GridViewInScroll;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.ContactsBaseDao;
 import com.example.familyapplication.db.UsersBaseDao;

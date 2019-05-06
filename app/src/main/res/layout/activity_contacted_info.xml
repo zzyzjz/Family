@@ -218,6 +218,17 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/contacted_info_btn_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="20sp"
+                    android:text="删 除 联 系 人"
+                    android:textColor="@android:color/white"
+                    android:background="@color/btn_logout_normal"/>
+
             </LinearLayout>
 
         </ScrollView>

@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.familyapplication.R;
 import com.hyphenate.chat.EMGroup;
 
 import java.util.List;

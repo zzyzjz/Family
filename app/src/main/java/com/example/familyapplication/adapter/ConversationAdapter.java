@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.familyapplication.list.ConversationList;
+import com.example.familyapplication.R;
 import com.example.familyapplication.db.ContactsBaseDao;
 import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;
@@ -24,7 +26,6 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
-import com.hyphenate.easeui.adapter.EaseConversationAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;

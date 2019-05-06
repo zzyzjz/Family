@@ -48,8 +48,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="我 的 群 组"
-        android:textSize="20sp"/>
+        android:text="我的群组"
+        android:textSize="15sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -59,12 +59,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical">
-        <com.example.familyapplication.ListViewInScroll
+        <com.example.familyapplication.list.ListViewInScroll
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/group_lv"/>
     </ScrollView>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#cccccc" />
 
 
 </LinearLayout>

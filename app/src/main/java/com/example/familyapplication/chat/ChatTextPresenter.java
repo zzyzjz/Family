@@ -1,0 +1,52 @@
+package com.example.familyapplication.chat;
+
+import android.content.Context;
+import android.content.Intent;
+import android.widget.BaseAdapter;
+
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.model.EaseDingMessageHelper;
+import com.hyphenate.easeui.ui.EaseDingAckUserListActivity;
+import com.hyphenate.exceptions.HyphenateException;
+
+public class ChatTextPresenter extends ChatRowPresenter {
+
+    private static final String TAG = "EaseChatTextPresenter";
+
+    @Override
+    protected ChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
+        return new ChatRowText(cxt, message, position, adapter);
+    }
+
+    @Override
+    public void onBubbleClick(EMMessage message) {
+        super.onBubbleClick(message);
+
+        if (!EaseDingMessageHelper.get().isDingMessage(message)) {
+            return;
+        }
+
+        // If this msg is a ding-type msg, click to show a list who has already read this message.
+        Intent i = new Intent(getContext(), EaseDingAckUserListActivity.class);
+        i.putExtra("msg", message);
+        getContext().startActivity(i);
+    }
+
+    @Override
+    protected void handleReceiveMessage(EMMessage message) {
+        if (!message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
+            try {
+                EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        // Send the group-ack cmd type msg if this msg is a ding-type msg.
+        EaseDingMessageHelper.get().sendAckMessage(message);
+    }
+
+
+}

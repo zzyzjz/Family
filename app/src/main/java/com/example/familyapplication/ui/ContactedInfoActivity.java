@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.familyapplication.Contacted;
 import com.example.familyapplication.R;
@@ -17,6 +18,7 @@ import com.example.familyapplication.db.ContactsBaseDao;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.exceptions.HyphenateException;
 
 public class ContactedInfoActivity extends AppCompatActivity {
     //备注展示页
@@ -28,7 +30,7 @@ public class ContactedInfoActivity extends AppCompatActivity {
 
     private ImageView head;
     private TextView name,id,birth,tel,callTime,inspectTime,remarks;
-    private Button modify,chat;
+    private Button modify,chat,delete;
     private Contacts contact;
     private Contacted contacted;
     private String me;
@@ -57,7 +59,8 @@ public class ContactedInfoActivity extends AppCompatActivity {
         //初始化为当前联系人的userId
         String remarkName = contacted.getContactedId();
 
-        if(ContactsBaseDao.searchByUserIdAndContactedId
+        if(!contacted.getContactedId().equals(EMClient.getInstance().getCurrentUser())
+                && ContactsBaseDao.searchByUserIdAndContactedId
                 (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null){
             //当前用户给该联系人设置了name时
             remarkName = ContactsBaseDao.searchByUserIdAndContactedId
@@ -115,6 +118,47 @@ public class ContactedInfoActivity extends AppCompatActivity {
                 startActivityForResult(intent,0);
                 Log.e(TAG, "-----------------101");
 //                finish();
+            }
+        });
+
+        delete = findViewById(R.id.contacted_info_btn_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            EMClient.getInstance().contactManager().deleteContact(contact.getContactedId());
+
+                            ContactsBaseDao.deleteByUserIdAndContactedId(
+                                    EMClient.getInstance().getCurrentUser(),contacted.getContactedId());
+                            ContactsBaseDao.deleteByUserIdAndContactedId(
+                                    contacted.getContactedId(),EMClient.getInstance().getCurrentUser());
+
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    finish();
+
+                                    Toast.makeText(getApplicationContext(),
+                                            "删除联系人成功...", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } catch (final HyphenateException e) {
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+
+                                    Toast.makeText(getApplicationContext(),
+                                            "删除联系人失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                }.start();
+
             }
         });
 

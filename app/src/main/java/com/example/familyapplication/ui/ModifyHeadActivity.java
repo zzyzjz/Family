@@ -1,22 +1,16 @@
 package com.example.familyapplication.ui;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.familyapplication.Contacted;
-import com.example.familyapplication.GridViewInScroll;
+import com.example.familyapplication.list.GridViewInScroll;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;

@@ -30,6 +30,7 @@
 
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
         <activity android:name=".ui.ModifyGroupNameActivity"/>
         <activity android:name=".ui.ModifyBoardActivity" />
         <activity android:name=".ui.GroupPickContactsActivity" />

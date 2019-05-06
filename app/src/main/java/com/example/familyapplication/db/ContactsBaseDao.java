@@ -36,6 +36,19 @@ public class ContactsBaseDao {
 
     }
 
+    public static void deleteByUserIdAndContactedId(String userId,String contactedId){
+        Contacts c = searchByUserIdAndContactedId(userId,contactedId);
+
+        try {
+            DataBase.getDaoSession().getContactsDao().deleteByKey(c.getId());
+            Log.e(TAG, "delete ->"+c.getUserId()+"<><>"+c.getContactedId());
+        }catch (Exception e){
+            e.printStackTrace();
+
+            Log.e(TAG, "数据删除失败");
+        }
+    }
+
     public static void deleteAll(){
         try {
             DataBase.getDaoSession().getContactsDao().deleteAll();

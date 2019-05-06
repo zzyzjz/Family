@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.list;
 
 import android.content.Context;
 import android.util.AttributeSet;

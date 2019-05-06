@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="5dp">
-        <com.example.familyapplication.GridViewInScroll
+        <com.example.familyapplication.list.GridViewInScroll
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/modify_head_grid_image"

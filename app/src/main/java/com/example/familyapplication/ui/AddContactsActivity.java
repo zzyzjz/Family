@@ -74,13 +74,31 @@ public class AddContactsActivity extends AppCompatActivity {
                         //参数为要添加的好友的username和添加理由
                         try {
                             EMClient.getInstance().contactManager().addContact(name,"");
+
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    finish();
+
+                                    Toast.makeText(getApplicationContext(),
+                                            "添加联系人成功！", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             Contacts c = new Contacts(null,EMClient.getInstance().getCurrentUser(),name,
                                     null,null,null,null,null,null);
-                            ContactsBaseDao.insert(c);
+                            if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                    EMClient.getInstance().getCurrentUser(),name) == null){
+                                ContactsBaseDao.insert(c);
+                            }
+
                             //当前用户添加id=name的用户为联系人的同时，当前用户也是name的新增联系人
                             c = new Contacts(null,name,EMClient.getInstance().getCurrentUser(),
                                     null,null,null,null,null,null);
-                            ContactsBaseDao.insert(c);
+
+                            if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                    name,EMClient.getInstance().getCurrentUser()) == null){
+                                ContactsBaseDao.insert(c);
+                            }
+
                             Log.e(TAG, "添加联系人·····"+name );
                             List<Contacts> contacts = ContactsBaseDao.searchAll();
                             Log.e(TAG, "---------------70" );
@@ -93,8 +111,15 @@ public class AddContactsActivity extends AppCompatActivity {
                                 Log.e(TAG, "tel ---> "+con.getTel() );
                                 Log.e(TAG, "remark ---> "+con.getRemarks() );
                             }
-                        } catch (HyphenateException e) {
+                        } catch (final HyphenateException e) {
                             e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+
+                                    Toast.makeText(getApplicationContext(),
+                                            "添加联系人失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
                     }

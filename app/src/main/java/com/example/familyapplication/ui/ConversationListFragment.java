@@ -19,14 +19,13 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import com.example.familyapplication.ConversationList;
+import com.example.familyapplication.list.ConversationList;
 import com.example.familyapplication.R;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.widget.EaseConversationList;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;

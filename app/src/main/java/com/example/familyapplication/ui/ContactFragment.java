@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.familyapplication.Contacted;
-import com.example.familyapplication.FmlContactAdapter;
+import com.example.familyapplication.adapter.FmlContactAdapter;
 import com.example.familyapplication.R;
 import com.example.familyapplication.db.Contacts;
 import com.example.familyapplication.db.ContactsBaseDao;
@@ -62,14 +62,14 @@ public class ContactFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //测试根据路径显示图片
-        iv = getActivity().findViewById(R.id.contact_image);
+//        iv = getActivity().findViewById(R.id.contact_image);
 //        String path = "../res/mipmap=hdpi/harry_potter.png";
 //        Bitmap bm = BitmapFactory.decodeFile(path);
 //        iv.setImageBitmap(bm);
 //        iv.setImageResource(R.drawable.harry_potter);
         //事实证明R.xxx.xxx 实质上是一个int
-        iv.setImageResource(R.drawable.head);
-        Log.e(TAG, "harry_potter id -> "+R.drawable.head );
+//        iv.setImageResource(R.drawable.head);
+//        Log.e(TAG, "harry_potter id -> "+R.drawable.head );
 //        iv.setImageResource(getPic("R.mipmap.Harry_Potter"));
 
 
@@ -107,7 +107,7 @@ public class ContactFragment extends Fragment {
                 i.putExtra("name",contacted.getName());
                 i.putExtra("head",contacted.getImage());
                 //contactedId 为当前联系人的userId
-                startActivity(i);
+                startActivityForResult(i,2);
 
             }
         });
@@ -117,9 +117,19 @@ public class ContactFragment extends Fragment {
         group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), GroupActivity.class));
+                startActivityForResult(new Intent(getActivity(), GroupActivity.class),1);
             }
         });
+
+        addFriend = getActivity().findViewById(R.id.contact_btn_add_friend);
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getActivity(), AddContactsActivity.class),0);
+            }
+        });
+
+
 
 
 
@@ -131,6 +141,7 @@ public class ContactFragment extends Fragment {
                 addAUser();
             }
         });
+        addUser.setVisibility(View.GONE);
         addContact = getActivity().findViewById(R.id.contact_btn_add_contact);
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,15 +149,38 @@ public class ContactFragment extends Fragment {
                 addAContact();
             }
         });
+        addContact.setVisibility(View.GONE);
 
-        addFriend = getActivity().findViewById(R.id.contact_btn_add_friend);
-        addFriend.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(contactedList != null || !contactedList.isEmpty()){
+            contactedList.clear();
+        }
+
+        //处理联系人信息，传给adapter，显示在listView上
+        initContacts();//初始化联系人数据
+        FmlContactAdapter adapter = new FmlContactAdapter(getActivity(),R.layout.item_contacts,contactedList);
+        final ListView listView = getActivity().findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddContactsActivity.class));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contacted contacted = contactedList.get(position);
+                Intent i = new Intent(getActivity(), ContactedInfoActivity.class);
+                i.putExtra("contactedId",contacted.getContactedId());
+                i.putExtra("name",contacted.getName());
+                i.putExtra("head",contacted.getImage());
+                //contactedId 为当前联系人的userId
+                startActivityForResult(i,2);
+
             }
         });
-
 
     }
 
@@ -164,12 +198,12 @@ public class ContactFragment extends Fragment {
         Log.e(TAG, "c1 name -> "+ c1.getName() );
         Log.e(TAG, "c1 image -> "+ c1.getImage() );
 
-        contactedList.add(c1);
+//        contactedList.add(c1);
         Contacted c2 = new Contacted("u2","zjz",2131165473);
         Log.e(TAG, "c2 name -> "+ c2.getName() );
         Log.e(TAG, "c2 image -> "+ c2.getImage() );
 
-        contactedList.add(c2);
+//        contactedList.add(c2);
 
         List<Users> users = UsersBaseDao.searchAll();
         Log.e(TAG, "------------------148" );

@@ -13,8 +13,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.familyapplication.FmlGroupAdapter;
-import com.example.familyapplication.ListViewInScroll;
+import com.example.familyapplication.adapter.FmlGroupAdapter;
+import com.example.familyapplication.list.ListViewInScroll;
 import com.example.familyapplication.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;

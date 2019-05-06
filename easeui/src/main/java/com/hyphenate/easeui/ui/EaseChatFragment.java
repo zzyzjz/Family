@@ -98,6 +98,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected int chatType;
     protected String toChatUsername;
     protected EaseChatMessageList messageList;
+
     protected EaseChatInputMenu inputMenu;
 
     protected EMConversation conversation;
@@ -122,12 +123,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     
     static final int ITEM_TAKE_PICTURE = 1;
     static final int ITEM_PICTURE = 2;
-    static final int ITEM_LOCATION = 3;
+//    static final int ITEM_LOCATION = 3;
     
-    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
-    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+//    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
+//    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
+//            R.drawable.ease_chat_location_selector };
+//    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture };
+    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector };
+    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE };
+
+
+
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
@@ -620,7 +627,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
         // Remove all padding actions in handler
         handler.removeCallbacksAndMessages(null);
-        typingHandler.sendEmptyMessage(MSG_TYPING_END);
+//        typingHandler.sendEmptyMessage(MSG_TYPING_END);
     }
 
     @Override
@@ -780,14 +787,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             switch (itemId) {
             case ITEM_TAKE_PICTURE:
                 selectPicFromCamera();
+                Log.e("zjz easechat ", "camera " );
                 break;
             case ITEM_PICTURE:
                 selectPicFromLocal();
+                Log.e("zjz easechat ", "picture " );
                 break;
-            case ITEM_LOCATION:
-                Log.e("zjz easechat ", "location " );
-                startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
-                break;
+//            case ITEM_LOCATION:
+//                Log.e("zjz easechat ", "location " );
+//                startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
+//                break;
 
             default:
                 break;
@@ -1004,7 +1013,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             Toast.makeText(getActivity(), R.string.sd_card_does_not_exist, Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Log.e("zjz easechat ", "----1016---- " );
         cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
                 + System.currentTimeMillis() + ".jpg");
         //noinspection ResultOfMethodCallIgnored
@@ -1019,6 +1028,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
      */
     protected void selectPicFromLocal() {
         Intent intent;
+        Log.e("zjz easechat ", "----1031---- " );
         if (Build.VERSION.SDK_INT < 19) {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");

@@ -1,4 +1,4 @@
-package com.example.familyapplication;
+package com.example.familyapplication.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.example.familyapplication.R;
 import com.example.familyapplication.db.Users;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;

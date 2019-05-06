@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/contact_btn_add_user"
                 android:text="ADD A USER"
+
                 />
 
             <Button
@@ -64,25 +65,31 @@
                 android:id="@+id/contact_btn_add_contact"
                 android:text="ADD A contact"
 
+
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/contact_image"/>
+
             <!-- TODO: Update blank fragment layout -->
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="我的联系人"
+                android:textSize="15sp"/>
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="50sp"
-                android:text="hello_contact_fragment" />
+                android:layout_height="3dp"
+                android:background="#cccccc" />
 
             <!--联系人列表-->
-            <com.example.familyapplication.ListViewInScroll
+            <com.example.familyapplication.list.ListViewInScroll
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/list_view"/>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#cccccc" />
 
 
         </LinearLayout>
