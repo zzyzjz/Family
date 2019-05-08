@@ -22,16 +22,22 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
-        <activity android:name=".ui.ModifyGroupNameActivity"/>
+        <activity android:name=".ui.ModifyInspectActivity"></activity>
+        <activity android:name=".ui.ModifyCallActivity" />
+        <activity android:name=".ui.ModifyContactedRemarksActivity" />
+        <activity android:name=".ui.ModifyContactedTelActivity" />
+        <activity android:name=".ui.ModifyContactedNameActivity" />
+        <activity android:name=".ui.ModifyBirthActivity" />
+        <activity android:name=".ui.RemindActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
+        <activity android:name=".ui.ModifyGroupNameActivity" />
         <activity android:name=".ui.ModifyBoardActivity" />
         <activity android:name=".ui.GroupPickContactsActivity" />
         <activity android:name=".ui.JoinGroupActivity" />
@@ -57,22 +63,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
+            android:value="BE:9F:9C:52:BB:6A:AB:19:B0:09:FB:40:92:1E:C2:64:42:B5:92:51;com.example.familyapplication" />
 
-            android:value="BE:9F:9C:52:BB:6A:AB:19:B0:09:FB:40:92:1E:C2:64:42:B5:92:51;com.example.familyapplication"
-            />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
-        </service>
-
-        <!-- 设置环信应用的AppKey -->
+            android:process=":remote" /> <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1106190331019987#family1" />
-        <!-- 声明SDK所需的service SDK核心功能 -->
+            android:value="1106190331019987#family1" /> <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />

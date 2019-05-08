@@ -152,7 +152,7 @@
                 android:layout_marginRight="10dip"
                 android:layout_weight="1"
                 android:id="@+id/modify_info_btn_back"
-                android:background="@drawable/btn_back"
+                android:background="@drawable/btn_border"
                 android:gravity="center"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"

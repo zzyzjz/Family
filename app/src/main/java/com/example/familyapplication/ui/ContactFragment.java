@@ -194,16 +194,6 @@ public class ContactFragment extends Fragment {
 
     private void initContacts(){
 
-        Contacted c1 = new Contacted("u1","zzzzzjz",R.drawable.head81);
-        Log.e(TAG, "c1 name -> "+ c1.getName() );
-        Log.e(TAG, "c1 image -> "+ c1.getImage() );
-
-//        contactedList.add(c1);
-        Contacted c2 = new Contacted("u2","zjz",2131165473);
-        Log.e(TAG, "c2 name -> "+ c2.getName() );
-        Log.e(TAG, "c2 image -> "+ c2.getImage() );
-
-//        contactedList.add(c2);
 
         List<Users> users = UsersBaseDao.searchAll();
         Log.e(TAG, "------------------148" );
@@ -275,17 +265,17 @@ public class ContactFragment extends Fragment {
             Log.e(TAG, "head ---> "+use.getHead() );
         }
         Log.e(TAG, "---------------------217" );
-//        UsersBaseDao.deleteAll();
+        UsersBaseDao.deleteAll();
 //        UsersBaseDao.deleteByKey(4);
 
-//        Users u1 = new Users(null,"user1","qwer","user01",R.drawable.head);
-//        UsersBaseDao.insert(u1);
-//        Users u2 = new Users(null,"user2","qwer","user002",R.drawable.head);
-//        UsersBaseDao.insert(u2);
-//        Users u3 = new Users(null,"user3","qwer","user zjz",R.drawable.head);
-//        UsersBaseDao.insert(u3);
-//        Users u4 = new Users(null,"user4","qwer",null,R.drawable.head11);
-//        UsersBaseDao.insert(u4);
+        Users u1 = new Users(null,"user1","qwer","user01",R.drawable.head52);
+        UsersBaseDao.insert(u1);
+        Users u2 = new Users(null,"user2","qwer","user002",R.drawable.head81);
+        UsersBaseDao.insert(u2);
+        Users u3 = new Users(null,"user3","qwer","user zjz",R.drawable.head);
+        UsersBaseDao.insert(u3);
+        Users u4 = new Users(null,"user4","qwer",null,R.drawable.head11);
+        UsersBaseDao.insert(u4);
 //
 //
 //        users = UsersBaseDao.searchAll();
@@ -315,23 +305,23 @@ public class ContactFragment extends Fragment {
         Log.e(TAG, "-------------------252" );
         ContactsBaseDao.deleteAll();
 //
-//        Contacts c1 = new Contacts(null,"user1","user2","小可爱1-2","12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
-//
-//        ContactsBaseDao.insert(c1);
-//
-//        Contacts c2 = new Contacts(null,"user3","user2","小可爱3-2","12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
-//
-//        ContactsBaseDao.insert(c2);
+        Contacts c1 = new Contacts(null,"user1","user2","小1-2",null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
 
-        Contacts c3 = new Contacts(null,"user2","user1",null,"12-28",
-                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
+        ContactsBaseDao.insert(c1);
+
+        Contacts c2 = new Contacts(null,"user3","user2","姐姐3-2",null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
+
+        ContactsBaseDao.insert(c2);
+
+        Contacts c3 = new Contacts(null,"user2","user1","奶奶",null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
 
         ContactsBaseDao.insert(c3);
 //
-        Contacts c4 = new Contacts(null,"user2","user3","机智的小可爱2-3","12-28",
-                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
+        Contacts c4 = new Contacts(null,"user2","user3","妹妹2-3",null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
 
         ContactsBaseDao.insert(c4);
 //        Contacts c5 = new Contacts(null,"user2","user4",null,"12-28",

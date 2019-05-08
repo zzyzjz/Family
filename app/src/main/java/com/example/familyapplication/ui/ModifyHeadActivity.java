@@ -123,6 +123,9 @@ public class ModifyHeadActivity extends AppCompatActivity {
         headList.add(R.drawable.head72);
         headList.add(R.drawable.head81);
         headList.add(R.drawable.head82);
+        headList.add(R.drawable.head91);
+        headList.add(R.drawable.head92);
+
         headList.add(R.drawable.head);
 
     }

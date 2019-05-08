@@ -230,7 +230,7 @@ public class MessageFragment extends Fragment {
             lc.add(c);
         }
         Log.e(TAG, "------237-----toList: "+lc.size() );
-        Log.e(TAG, "------237-----toList: "+lc.get(0) );
+//        Log.e(TAG, "------237-----toList: "+lc.get(0) );
         return lc;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class ContactedInfoActivity extends AppCompatActivity {
 
     private ImageView head;
     private TextView name,id,birth,tel,callTime,inspectTime,remarks;
-    private Button modify,chat,delete;
+    private Button remind,chat,delete;
     private Contacts contact;
     private Contacted contacted;
     private String me;
@@ -70,6 +71,16 @@ public class ContactedInfoActivity extends AppCompatActivity {
             remarkName = UsersBaseDao.searchByUserId(contacted.getContactedId()).getNickname();
         }
         name.setText(remarkName);
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactedInfoActivity.this,
+                        ModifyContactedNameActivity.class);
+                intent.putExtra("userId",contact.getUserId());
+                intent.putExtra("contactedId",contact.getContactedId());
+                startActivityForResult(intent,1);
+            }
+        });
 
         //设置ID
         id = findViewById(R.id.contacted_info_tv_id);
@@ -79,7 +90,21 @@ public class ContactedInfoActivity extends AppCompatActivity {
         birth.setText(contact.getBirthday());
         //设置TEL
         tel = findViewById(R.id.contacted_info_tv_tel);
-        tel.setText(contact.getTel());
+        if (contact.getTel() != null && !TextUtils.isEmpty(contact.getTel())){
+            tel.setText(contact.getTel());
+        }else {
+            tel.setText("点击设置电话号码");
+        }
+        tel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactedInfoActivity.this,
+                        ModifyContactedTelActivity.class);
+                intent.putExtra("userId",contact.getUserId());
+                intent.putExtra("contactedId",contact.getContactedId());
+                startActivityForResult(intent,1);
+            }
+        });
         //设置最近通话
         callTime = findViewById(R.id.contacted_info_tv_call);
         callTime.setText(contact.getLastCallTime());
@@ -89,6 +114,16 @@ public class ContactedInfoActivity extends AppCompatActivity {
         //设置备注板
         remarks = findViewById(R.id.contacted_info_tv_remarks);
         remarks.setText(contact.getRemarks());
+        remarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactedInfoActivity.this,
+                        ModifyContactedRemarksActivity.class);
+                intent.putExtra("userId",contact.getUserId());
+                intent.putExtra("contactedId",contact.getContactedId());
+                startActivityForResult(intent,1);
+            }
+        });
 
 
         chat = findViewById(R.id.contacted_info_btn_chat);
@@ -105,13 +140,13 @@ public class ContactedInfoActivity extends AppCompatActivity {
             }
         });
 
-        modify = findViewById(R.id.contacted_info_btn_modify);
-        modify.setOnClickListener(new View.OnClickListener() {
+        remind = findViewById(R.id.contacted_info_btn_remind);
+        remind.setOnClickListener(new View.OnClickListener() {
             //跳转至修改备注页面
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(
-                        ContactedInfoActivity.this, ModifyInfoActivity.class);
+                        ContactedInfoActivity.this, RemindActivity.class);
                 //
                 intent.putExtra("userId",contact.getUserId());
                 intent.putExtra("contactedId",contact.getContactedId());
@@ -132,10 +167,17 @@ public class ContactedInfoActivity extends AppCompatActivity {
                         try {
                             EMClient.getInstance().contactManager().deleteContact(contact.getContactedId());
 
-                            ContactsBaseDao.deleteByUserIdAndContactedId(
-                                    EMClient.getInstance().getCurrentUser(),contacted.getContactedId());
-                            ContactsBaseDao.deleteByUserIdAndContactedId(
-                                    contacted.getContactedId(),EMClient.getInstance().getCurrentUser());
+                            if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                    EMClient.getInstance().getCurrentUser(),contacted.getContactedId()) != null){
+                                ContactsBaseDao.deleteByUserIdAndContactedId(
+                                        EMClient.getInstance().getCurrentUser(),contacted.getContactedId());
+                            }
+                            if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                    contacted.getContactedId(),EMClient.getInstance().getCurrentUser()) != null){
+                                ContactsBaseDao.deleteByUserIdAndContactedId(
+                                        contacted.getContactedId(),EMClient.getInstance().getCurrentUser());
+                            }
+
 
 
                             runOnUiThread(new Runnable() {
@@ -214,5 +256,9 @@ public class ContactedInfoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         update();
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

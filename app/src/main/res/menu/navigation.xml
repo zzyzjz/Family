@@ -3,17 +3,23 @@
 
     <item
         android:id="@+id/navigation_message"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/message"
         android:title="@string/title_message" />
 
     <item
         android:id="@+id/navigation_address_list"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/contact"
         android:title="@string/title_address_list" />
 
     <item
+        android:id="@+id/navigation_remind"
+        android:icon="@drawable/remind"
+        android:title="提醒"
+        />
+
+    <item
         android:id="@+id/navigation_me"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/me"
         android:title="@string/title_me" />
 
 </menu>

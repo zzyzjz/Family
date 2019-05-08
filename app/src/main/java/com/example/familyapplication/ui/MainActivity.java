@@ -7,16 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.familyapplication.R;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.ui.EaseBaiduMapActivity;
-import com.hyphenate.easeui.widget.EaseChatExtendMenu;
-import com.hyphenate.easeui.widget.EaseConversationList;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
                     mTextMessage.setText(R.string.title_address_list);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_view,new ContactFragment()).commit();
+                    return true;
+                case R.id.navigation_remind:
+                    mTextMessage.setText("提醒");
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_view,new RemindFragment()).commit();
                     return true;
                 case R.id.navigation_me:
                     mTextMessage.setText(R.string.title_me);
@@ -92,12 +91,13 @@ public class MainActivity extends AppCompatActivity {
 //            getSupportFragmentManager().beginTransaction()
 //                    .add(R.id.main_view,new PlaceholderFragment()).commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_view,new MessageFragment()).commit();
+                    .add(R.id.main_view,new RemindFragment()).commit();
         }
 
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_remind);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }

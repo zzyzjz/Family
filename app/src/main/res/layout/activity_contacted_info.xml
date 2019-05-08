@@ -7,13 +7,22 @@
     tools:context=".ui.ContactedInfoActivity"
     android:orientation="vertical">
 
-    <com.hyphenate.easeui.widget.EaseTitleBar
-        android:id="@+id/info_title_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="@dimen/height_top_bar"
         android:background="@color/colorPrimary"
-        hyphenate:titleBarBackground="@color/colorPrimary"
-        hyphenate:titleBarTitle="备注信息"/>
+        android:gravity="center_vertical" >
+        <!--返回键-->
+        <include layout="@layout/ease_commom_back_btn" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="备注信息"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp" />
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -174,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/contacted_info_tv_remarks"
-                        android:text="备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注"
+                        android:minLines="1"
                         android:textSize="20sp"
                         android:background="@drawable/border_dark"
                         android:padding="10dp"/>
@@ -193,12 +202,12 @@
                         android:layout_marginLeft="10dip"
                         android:layout_marginRight="10dip"
                         android:layout_weight="1"
-                        android:id="@+id/contacted_info_btn_modify"
-                        android:background="@drawable/btn_back"
+                        android:id="@+id/contacted_info_btn_remind"
+                        android:background="@drawable/btn_border"
                         android:gravity="center"
                         android:paddingBottom="7dp"
                         android:paddingTop="7dp"
-                        android:text="修 改 备 注"
+                        android:text="亲 情 提 醒"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 

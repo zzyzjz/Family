@@ -28,11 +28,14 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
         public final static Property UserId = new Property(1, String.class, "userId", false, "USER_ID");
         public final static Property ContactedId = new Property(2, String.class, "contactedId", false, "CONTACTED_ID");
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property Birthday = new Property(4, String.class, "birthday", false, "BIRTHDAY");
-        public final static Property Tel = new Property(5, String.class, "tel", false, "TEL");
-        public final static Property LastCallTime = new Property(6, String.class, "lastCallTime", false, "LAST_CALL_TIME");
-        public final static Property LastInspectTime = new Property(7, String.class, "lastInspectTime", false, "LAST_INSPECT_TIME");
-        public final static Property Remarks = new Property(8, String.class, "remarks", false, "REMARKS");
+        public final static Property Tel = new Property(4, String.class, "tel", false, "TEL");
+        public final static Property Birthday = new Property(5, String.class, "birthday", false, "BIRTHDAY");
+        public final static Property RemarkForBirth = new Property(6, String.class, "remarkForBirth", false, "REMARK_FOR_BIRTH");
+        public final static Property LastCallTime = new Property(7, String.class, "lastCallTime", false, "LAST_CALL_TIME");
+        public final static Property RemarkForCall = new Property(8, String.class, "remarkForCall", false, "REMARK_FOR_CALL");
+        public final static Property LastInspectTime = new Property(9, String.class, "lastInspectTime", false, "LAST_INSPECT_TIME");
+        public final static Property RemarkForInspect = new Property(10, String.class, "remarkForInspect", false, "REMARK_FOR_INSPECT");
+        public final static Property Remarks = new Property(11, String.class, "remarks", false, "REMARKS");
     }
 
 
@@ -52,11 +55,14 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
                 "\"USER_ID\" TEXT NOT NULL ," + // 1: userId
                 "\"CONTACTED_ID\" TEXT NOT NULL ," + // 2: contactedId
                 "\"NAME\" TEXT," + // 3: name
-                "\"BIRTHDAY\" TEXT," + // 4: birthday
-                "\"TEL\" TEXT," + // 5: tel
-                "\"LAST_CALL_TIME\" TEXT," + // 6: lastCallTime
-                "\"LAST_INSPECT_TIME\" TEXT," + // 7: lastInspectTime
-                "\"REMARKS\" TEXT);"); // 8: remarks
+                "\"TEL\" TEXT," + // 4: tel
+                "\"BIRTHDAY\" TEXT," + // 5: birthday
+                "\"REMARK_FOR_BIRTH\" TEXT," + // 6: remarkForBirth
+                "\"LAST_CALL_TIME\" TEXT," + // 7: lastCallTime
+                "\"REMARK_FOR_CALL\" TEXT," + // 8: remarkForCall
+                "\"LAST_INSPECT_TIME\" TEXT," + // 9: lastInspectTime
+                "\"REMARK_FOR_INSPECT\" TEXT," + // 10: remarkForInspect
+                "\"REMARKS\" TEXT);"); // 11: remarks
     }
 
     /** Drops the underlying database table. */
@@ -81,29 +87,44 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
             stmt.bindString(4, name);
         }
  
-        String birthday = entity.getBirthday();
-        if (birthday != null) {
-            stmt.bindString(5, birthday);
-        }
- 
         String tel = entity.getTel();
         if (tel != null) {
-            stmt.bindString(6, tel);
+            stmt.bindString(5, tel);
+        }
+ 
+        String birthday = entity.getBirthday();
+        if (birthday != null) {
+            stmt.bindString(6, birthday);
+        }
+ 
+        String remarkForBirth = entity.getRemarkForBirth();
+        if (remarkForBirth != null) {
+            stmt.bindString(7, remarkForBirth);
         }
  
         String lastCallTime = entity.getLastCallTime();
         if (lastCallTime != null) {
-            stmt.bindString(7, lastCallTime);
+            stmt.bindString(8, lastCallTime);
+        }
+ 
+        String remarkForCall = entity.getRemarkForCall();
+        if (remarkForCall != null) {
+            stmt.bindString(9, remarkForCall);
         }
  
         String lastInspectTime = entity.getLastInspectTime();
         if (lastInspectTime != null) {
-            stmt.bindString(8, lastInspectTime);
+            stmt.bindString(10, lastInspectTime);
+        }
+ 
+        String remarkForInspect = entity.getRemarkForInspect();
+        if (remarkForInspect != null) {
+            stmt.bindString(11, remarkForInspect);
         }
  
         String remarks = entity.getRemarks();
         if (remarks != null) {
-            stmt.bindString(9, remarks);
+            stmt.bindString(12, remarks);
         }
     }
 
@@ -123,29 +144,44 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
             stmt.bindString(4, name);
         }
  
-        String birthday = entity.getBirthday();
-        if (birthday != null) {
-            stmt.bindString(5, birthday);
-        }
- 
         String tel = entity.getTel();
         if (tel != null) {
-            stmt.bindString(6, tel);
+            stmt.bindString(5, tel);
+        }
+ 
+        String birthday = entity.getBirthday();
+        if (birthday != null) {
+            stmt.bindString(6, birthday);
+        }
+ 
+        String remarkForBirth = entity.getRemarkForBirth();
+        if (remarkForBirth != null) {
+            stmt.bindString(7, remarkForBirth);
         }
  
         String lastCallTime = entity.getLastCallTime();
         if (lastCallTime != null) {
-            stmt.bindString(7, lastCallTime);
+            stmt.bindString(8, lastCallTime);
+        }
+ 
+        String remarkForCall = entity.getRemarkForCall();
+        if (remarkForCall != null) {
+            stmt.bindString(9, remarkForCall);
         }
  
         String lastInspectTime = entity.getLastInspectTime();
         if (lastInspectTime != null) {
-            stmt.bindString(8, lastInspectTime);
+            stmt.bindString(10, lastInspectTime);
+        }
+ 
+        String remarkForInspect = entity.getRemarkForInspect();
+        if (remarkForInspect != null) {
+            stmt.bindString(11, remarkForInspect);
         }
  
         String remarks = entity.getRemarks();
         if (remarks != null) {
-            stmt.bindString(9, remarks);
+            stmt.bindString(12, remarks);
         }
     }
 
@@ -161,11 +197,14 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
             cursor.getString(offset + 1), // userId
             cursor.getString(offset + 2), // contactedId
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // birthday
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // tel
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // lastCallTime
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // lastInspectTime
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // remarks
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // tel
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // birthday
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // remarkForBirth
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // lastCallTime
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // remarkForCall
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // lastInspectTime
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // remarkForInspect
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // remarks
         );
         return entity;
     }
@@ -176,11 +215,14 @@ public class ContactsDao extends AbstractDao<Contacts, Long> {
         entity.setUserId(cursor.getString(offset + 1));
         entity.setContactedId(cursor.getString(offset + 2));
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setBirthday(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setTel(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setLastCallTime(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setLastInspectTime(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setRemarks(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setTel(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setBirthday(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setRemarkForBirth(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setLastCallTime(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setRemarkForCall(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setLastInspectTime(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setRemarkForInspect(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setRemarks(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
      }
     
     @Override

@@ -84,7 +84,7 @@ public class AddContactsActivity extends AppCompatActivity {
                                 }
                             });
                             Contacts c = new Contacts(null,EMClient.getInstance().getCurrentUser(),name,
-                                    null,null,null,null,null,null);
+                                    null,null,null,null,null,null,null,null,null);
                             if(ContactsBaseDao.searchByUserIdAndContactedId(
                                     EMClient.getInstance().getCurrentUser(),name) == null){
                                 ContactsBaseDao.insert(c);
@@ -92,7 +92,7 @@ public class AddContactsActivity extends AppCompatActivity {
 
                             //当前用户添加id=name的用户为联系人的同时，当前用户也是name的新增联系人
                             c = new Contacts(null,name,EMClient.getInstance().getCurrentUser(),
-                                    null,null,null,null,null,null);
+                                    null,null,null,null,null,null,null,null,null);
 
                             if(ContactsBaseDao.searchByUserIdAndContactedId(
                                     name,EMClient.getInstance().getCurrentUser()) == null){
@@ -126,5 +126,9 @@ public class AddContactsActivity extends AppCompatActivity {
                 }.start();
             }
         });
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

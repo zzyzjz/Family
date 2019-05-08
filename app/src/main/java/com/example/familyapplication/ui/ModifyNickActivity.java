@@ -24,7 +24,7 @@ public class ModifyNickActivity extends AppCompatActivity {
     private Users user;
 
     private EditText etNick;
-    private Button back,modify;
+    private Button modify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,5 +72,9 @@ public class ModifyNickActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void back(View view) {
+        finish();
     }
 }
