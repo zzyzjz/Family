@@ -1,6 +1,5 @@
 package com.example.familyapplication.ui;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.familyapplication.R;
-import com.example.familyapplication.db.DataBase;
 import com.example.familyapplication.db.Users;
 import com.example.familyapplication.db.UsersBaseDao;
 import com.hyphenate.chat.EMClient;
@@ -77,16 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        back = findViewById(R.id.register_btn_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-
-                finish();
-            }
-        });
-
 
     }
     public void UserTable(){
@@ -99,5 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
             Log.e(TAG, "nick ---> "+use.getNickname() );
             Log.e(TAG, "head ---> "+use.getHead() );
         }
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

@@ -135,8 +135,8 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="60dp"
         android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:background="@color/btn_logout_normal"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/btn_attention"/>
 
 
 </LinearLayout>

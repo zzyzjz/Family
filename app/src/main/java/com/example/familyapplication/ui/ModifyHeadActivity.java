@@ -29,6 +29,8 @@ public class ModifyHeadActivity extends AppCompatActivity {
     private Button modify;
     List<Integer> headList = new ArrayList<Integer>();
 
+
+
     HeadAdapter adapter;
 
     public int checked = -1;
@@ -107,24 +109,42 @@ public class ModifyHeadActivity extends AppCompatActivity {
     }
 
     public void initHead(){
-        headList.add(R.drawable.head11);
-        headList.add(R.drawable.head12);
-        headList.add(R.drawable.head21);
-        headList.add(R.drawable.head22);
-        headList.add(R.drawable.head31);
-        headList.add(R.drawable.head32);
-        headList.add(R.drawable.head41);
-        headList.add(R.drawable.head42);
+
+        headList.add(R.drawable.h34);
+        headList.add(R.drawable.h21);
+        headList.add(R.drawable.h24);
+        headList.add(R.drawable.h25);
+        headList.add(R.drawable.h23);
+        headList.add(R.drawable.h15);
+
+        headList.add(R.drawable.h1);
+        headList.add(R.drawable.h2);
+        headList.add(R.drawable.h7);
+        headList.add(R.drawable.h13);
+        headList.add(R.drawable.h16);
+        headList.add(R.drawable.h29);
+        headList.add(R.drawable.h30);
+
+//
+//        //----------------------------
+//        headList.add(R.drawable.head11);
+//        headList.add(R.drawable.head12);
+//        headList.add(R.drawable.head21);
+//        headList.add(R.drawable.head22);
+//        headList.add(R.drawable.head31);
+//        headList.add(R.drawable.head32);
+//        headList.add(R.drawable.head41);
+//        headList.add(R.drawable.head42);
         headList.add(R.drawable.head51);
-        headList.add(R.drawable.head52);
+//        headList.add(R.drawable.head52);
         headList.add(R.drawable.head61);
-        headList.add(R.drawable.head62);
-        headList.add(R.drawable.head71);
-        headList.add(R.drawable.head72);
-        headList.add(R.drawable.head81);
-        headList.add(R.drawable.head82);
+//        headList.add(R.drawable.head62);
+//        headList.add(R.drawable.head71);
+//        headList.add(R.drawable.head72);
+//        headList.add(R.drawable.head81);
+//        headList.add(R.drawable.head82);
         headList.add(R.drawable.head91);
-        headList.add(R.drawable.head92);
+//        headList.add(R.drawable.head92);
 
         headList.add(R.drawable.head);
 

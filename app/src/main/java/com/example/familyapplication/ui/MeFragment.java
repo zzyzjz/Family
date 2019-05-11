@@ -1,6 +1,8 @@
 package com.example.familyapplication.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -61,36 +63,66 @@ public class MeFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EMClient.getInstance().logout(true, new EMCallBack() {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("退出登录");
+                builder.setMessage("是否退出登录？");
+                builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess() {
-                        // TODO Auto-generated method stub
-                        Log.e(TAG, "退出登录成功···"+EMClient.getInstance().getCurrentUser() );
-                        startActivity(new Intent(getActivity(),LoginActivity.class));
-                        getActivity().finish();
-                    }
+                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(getActivity(),"退出",Toast.LENGTH_SHORT).show();
+                        EMClient.getInstance().logout(true, new EMCallBack() {
 
-                    @Override
-                    public void onProgress(int progress, String status) {
-                        // TODO Auto-generated method stub
+                            @Override
+                            public void onSuccess() {
+                                // TODO Auto-generated method stub
+                                Log.e(TAG, "退出登录成功···"+EMClient.getInstance().getCurrentUser() );
+                                startActivity(new Intent(getActivity(),LoginActivity.class));
+                                getActivity().finish();
+                            }
 
-                    }
+                            @Override
+                            public void onProgress(int progress, String status) {
+                                // TODO Auto-generated method stub
 
-                    @Override
-                    public void onError(int code, String message) {
-                        // TODO Auto-generated method stub
-                        Log.e(TAG, "退出登录失败···"+EMClient.getInstance().getCurrentUser() );
-                        Log.e(TAG, "退出登录失败···"+message );
+                            }
+
+                            @Override
+                            public void onError(int code, String message) {
+                                // TODO Auto-generated method stub
+                                Log.e(TAG, "退出登录失败···"+EMClient.getInstance().getCurrentUser() );
+                                Log.e(TAG, "退出登录失败···"+message );
+                            }
+                        });
                     }
                 });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(getActivity(),"取消",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                });
+                builder.show();
+
+
             }
         });
 
-        user = UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser());
+        if(UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser()) != null){
+            user = UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser());
+        }else {
+            user = new Users(null,"id","pass","nick",R.drawable.head);
+        }
+
 
         head = getActivity().findViewById(R.id.me_iv_head);
-        head.setImageResource(user.getHead());
+        if (user.getHead() == 0){
+            head.setImageResource(R.drawable.head);
+        }else {
+            head.setImageResource(user.getHead());
+        }
+
 
         head.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +146,7 @@ public class MeFragment extends Fragment {
         });
 
         id = getActivity().findViewById(R.id.me_tv_id);
-        id.setText(user.getUserId());
+        id.setText(EMClient.getInstance().getCurrentUser());
 
 //        modifyHead = getActivity().findViewById(R.id.me_btn_modify_head);
 //        modifyHead.setOnClickListener(new View.OnClickListener() {

@@ -54,10 +54,10 @@ public class AddContactsActivity extends AppCompatActivity {
                     //该用户已是联系人
                     Toast.makeText(AddContactsActivity.this,"该用户已是联系人！",Toast.LENGTH_SHORT).show();
                     return;
-                }else if(UsersBaseDao.searchByUserId(name) == null){
-                    //该用户不存在
-                    Toast.makeText(AddContactsActivity.this,"该用户不存在！",Toast.LENGTH_SHORT).show();
-                    return;
+//                }else if(UsersBaseDao.searchByUserId(name) == null){
+//                    //该用户不存在
+//                    Toast.makeText(AddContactsActivity.this,"该用户不存在！",Toast.LENGTH_SHORT).show();
+//                    return;
                 }else if(name.equals(EMClient.getInstance().getCurrentUser())){
                     //该用户名为当前用户
                     Log.e(TAG, "----------------47 " );

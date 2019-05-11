@@ -69,7 +69,7 @@ public class ContactFragment extends Fragment {
 //        iv.setImageResource(R.drawable.harry_potter);
         //事实证明R.xxx.xxx 实质上是一个int
 //        iv.setImageResource(R.drawable.head);
-//        Log.e(TAG, "harry_potter id -> "+R.drawable.head );
+//        Log.e(TAG, "harry_potter id -> "+R.drawable.head);
 //        iv.setImageResource(getPic("R.mipmap.Harry_Potter"));
 
 

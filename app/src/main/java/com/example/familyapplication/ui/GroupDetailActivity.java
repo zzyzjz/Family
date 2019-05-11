@@ -1,7 +1,9 @@
 package com.example.familyapplication.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -110,17 +112,53 @@ public class GroupDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(group.getOwner() .equals(EMClient.getInstance().getCurrentUser())){
                     //解散群
-                    dismissGroup();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GroupDetailActivity.this);
+                    builder.setTitle("解散该群");
+                    builder.setMessage("确认解散该群？");
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismissGroup();
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    });
+                    builder.show();
+
 //                    Toast.makeText(GroupDetailActivity.this,"解散",Toast.LENGTH_SHORT).show();
                 }else{
                     //退出群
-                    exitGroup();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GroupDetailActivity.this);
+                    builder.setTitle("退出该群");
+                    builder.setMessage("确认退出该群？");
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            exitGroup();
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    });
+                    builder.show();
+
 //                    Toast.makeText(GroupDetailActivity.this,"退群",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        initOwner();
+        if (UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser()) != null){
+            initOwner();
+        }
+
         owner = findViewById(R.id.group_detail_owner);
         ownerAdapter = new MemberAdapter(this,R.layout.item_grid,ownerList);
         owner.setAdapter(ownerAdapter);
@@ -228,7 +266,10 @@ public class GroupDetailActivity extends AppCompatActivity {
                             Log.e(TAG, "member id list size -> "+memberIdList.size() );
                             Log.e(TAG, "-----------177----------- " );
 
-                            initMembers();
+                            if (UsersBaseDao.searchByUserId(EMClient.getInstance().getCurrentUser()) != null){
+                                initMembers();
+                            }
+
                             memberAdapter = new MemberAdapter(
                                     GroupDetailActivity.this,R.layout.item_grid,memberList);
                             members = findViewById(R.id.group_detail_members);

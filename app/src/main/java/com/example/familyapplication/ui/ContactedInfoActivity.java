@@ -1,7 +1,9 @@
 package com.example.familyapplication.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -62,7 +64,9 @@ public class ContactedInfoActivity extends AppCompatActivity {
 
         if(!contacted.getContactedId().equals(EMClient.getInstance().getCurrentUser())
                 && ContactsBaseDao.searchByUserIdAndContactedId
-                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null){
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null
+                && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName())){
             //当前用户给该联系人设置了name时
             remarkName = ContactsBaseDao.searchByUserIdAndContactedId
                     (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName();
@@ -160,46 +164,64 @@ public class ContactedInfoActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactedInfoActivity.this);
+                builder.setTitle("删除该联系人");
+                builder.setMessage("确认删除该联系人？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
-                    public void run() {
-                        super.run();
-                        try {
-                            EMClient.getInstance().contactManager().deleteContact(contact.getContactedId());
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                                try {
+                                    EMClient.getInstance().contactManager().deleteContact(contact.getContactedId());
 
-                            if(ContactsBaseDao.searchByUserIdAndContactedId(
-                                    EMClient.getInstance().getCurrentUser(),contacted.getContactedId()) != null){
-                                ContactsBaseDao.deleteByUserIdAndContactedId(
-                                        EMClient.getInstance().getCurrentUser(),contacted.getContactedId());
-                            }
-                            if(ContactsBaseDao.searchByUserIdAndContactedId(
-                                    contacted.getContactedId(),EMClient.getInstance().getCurrentUser()) != null){
-                                ContactsBaseDao.deleteByUserIdAndContactedId(
-                                        contacted.getContactedId(),EMClient.getInstance().getCurrentUser());
-                            }
+                                    if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                            EMClient.getInstance().getCurrentUser(),contacted.getContactedId()) != null){
+                                        ContactsBaseDao.deleteByUserIdAndContactedId(
+                                                EMClient.getInstance().getCurrentUser(),contacted.getContactedId());
+                                    }
+                                    if(ContactsBaseDao.searchByUserIdAndContactedId(
+                                            contacted.getContactedId(),EMClient.getInstance().getCurrentUser()) != null){
+                                        ContactsBaseDao.deleteByUserIdAndContactedId(
+                                                contacted.getContactedId(),EMClient.getInstance().getCurrentUser());
+                                    }
 
 
 
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    finish();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            finish();
 
-                                    Toast.makeText(getApplicationContext(),
-                                            "删除联系人成功...", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(),
+                                                    "删除联系人成功...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } catch (final HyphenateException e) {
+                                    e.printStackTrace();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+
+                                            Toast.makeText(getApplicationContext(),
+                                                    "删除联系人失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
-                            });
-                        } catch (final HyphenateException e) {
-                            e.printStackTrace();
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-
-                                    Toast.makeText(getApplicationContext(),
-                                            "删除联系人失败 ： "+ e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
+                            }
+                        }.start();
                     }
-                }.start();
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                builder.show();
+
+
 
             }
         });
