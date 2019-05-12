@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -153,7 +154,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         Log.e(TAG, "---------180----------" );
         if(!name.equals(EMClient.getInstance().getCurrentUser())
                 && ContactsBaseDao.searchByUserIdAndContactedId
-                (EMClient.getInstance().getCurrentUser(),chatUserId).getName() != null){
+                (EMClient.getInstance().getCurrentUser(),chatUserId).getName() != null
+                && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),chatUserId).getName())){
             //当前用户给该联系人设置了name时
             name = ContactsBaseDao.searchByUserIdAndContactedId
                     (EMClient.getInstance().getCurrentUser(),chatUserId).getName();
@@ -347,7 +350,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             Toast.makeText(getActivity(), com.hyphenate.easeui.R.string.sd_card_does_not_exist, Toast.LENGTH_SHORT).show();
             return;
         }
-        Log.e("zjz easechat ", "----1016---- " );
+//        Log.e("zjz easechat ", "----1016---- " );
         cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
                 + System.currentTimeMillis() + ".jpg");
         //noinspection ResultOfMethodCallIgnored

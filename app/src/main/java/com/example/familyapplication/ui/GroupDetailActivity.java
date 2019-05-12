@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -170,15 +171,18 @@ public class GroupDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0){
+        if (requestCode == 0 && data != null){
 
+//            if (data.getStringArrayListExtra("newmembers") != null){
             final String[] newmembers = data.getStringArrayExtra("newmembers");
 
             addMembersToGroup(newmembers);
         }
-        if(requestCode == 1){
-            updateGroup();
-        }
+        updateGroup();
+
+//        if(requestCode == 1){
+//
+//        }
     }
 
     private void addMembersToGroup(final String[] newmembers) {
@@ -397,7 +401,9 @@ public class GroupDetailActivity extends AppCompatActivity {
             Log.e(TAG, "---------304----------" );
             if(!id.equals(EMClient.getInstance().getCurrentUser())
                     && ContactsBaseDao.searchByUserIdAndContactedId
-                    (EMClient.getInstance().getCurrentUser(),id).getName() != null){
+                    (EMClient.getInstance().getCurrentUser(),id).getName() != null
+                    && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),id).getName())){
                 //该id不是当前用户id 且 当前用户给该联系人设置了name时
                 name = ContactsBaseDao.searchByUserIdAndContactedId
                         (EMClient.getInstance().getCurrentUser(),id).getName();

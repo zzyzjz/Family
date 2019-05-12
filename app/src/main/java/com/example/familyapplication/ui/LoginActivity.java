@@ -71,8 +71,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(int i, String s) {
-                        Log.e(TAG,"登录失败···"+EMClient.getInstance().getCurrentUser());
+                    public void onError(int i, final String s) {
+                        Log.e(TAG,"登录失败···");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(LoginActivity.this,"登录失败"+s,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
 
                     @Override

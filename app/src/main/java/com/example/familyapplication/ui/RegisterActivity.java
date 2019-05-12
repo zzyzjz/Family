@@ -63,11 +63,27 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.e(TAG, "注册成功···"+name );
                             Users u = new Users(null,name,pass,null,R.drawable.head);
                             UsersBaseDao.insert(u);
-                            UserTable();
-                        } catch (HyphenateException e) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+
+                                    Toast.makeText(getApplicationContext(),
+                                            "注册成功！", Toast.LENGTH_SHORT).show();
+                                    finish();
+
+                                }
+                            });
+//                            UserTable();
+                        } catch (final HyphenateException e) {
                             e.printStackTrace();
                             Log.e(TAG, "注册失败···"+name +e.toString());
-                            Toast.makeText(RegisterActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(RegisterActivity.this,e.toString(),Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
                             return;
                         }
                     }

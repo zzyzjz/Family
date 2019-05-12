@@ -315,7 +315,9 @@ public class ConversationAdapter extends ArrayAdapter<EMConversation> {
 
         if(!userId.equals(EMClient.getInstance().getCurrentUser())
                 && ContactsBaseDao.searchByUserIdAndContactedId
-                (EMClient.getInstance().getCurrentUser(),userId).getName() != null){
+                (EMClient.getInstance().getCurrentUser(),userId).getName() != null
+                && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),userId).getName())){
             //当前用户给该联系人设置了name时
             nick = ContactsBaseDao.searchByUserIdAndContactedId
                     (EMClient.getInstance().getCurrentUser(),userId).getName();

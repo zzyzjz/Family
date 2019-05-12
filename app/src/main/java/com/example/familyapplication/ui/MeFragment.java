@@ -132,10 +132,10 @@ public class MeFragment extends Fragment {
         });
 
         nick = getActivity().findViewById(R.id.me_tv_nick);
-        if(!TextUtils.isEmpty(user.getNickname())){
-            nick.setText(user.getNickname());
+        if(user.getNickname() == null || TextUtils.isEmpty(user.getNickname())){
+            nick.setText("点击设置昵称");
         }else {
-            nick.setText("");
+            nick.setText(user.getNickname());
         }
 
         nick.setOnClickListener(new View.OnClickListener() {
@@ -209,10 +209,10 @@ public class MeFragment extends Fragment {
         });
 
         nick = getActivity().findViewById(R.id.me_tv_nick);
-        if(!TextUtils.isEmpty(user.getNickname())){
-            nick.setText(user.getNickname());
+        if(user.getNickname() == null || TextUtils.isEmpty(user.getNickname())){
+            nick.setText("点击设置昵称");
         }else {
-            nick.setText("");
+            nick.setText(user.getNickname());
         }
 
         nick.setOnClickListener(new View.OnClickListener() {

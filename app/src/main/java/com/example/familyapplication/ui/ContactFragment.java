@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -231,7 +232,9 @@ public class ContactFragment extends Fragment {
             Log.e(TAG, "---------180----------" );
             if(!id.equals(EMClient.getInstance().getCurrentUser())
                     && ContactsBaseDao.searchByUserIdAndContactedId
-                    (EMClient.getInstance().getCurrentUser(),id).getName() != null){
+                    (EMClient.getInstance().getCurrentUser(),id).getName() != null
+                    && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                    (EMClient.getInstance().getCurrentUser(),id).getName())  ){
                 //当前用户给该联系人设置了name时
                 name = ContactsBaseDao.searchByUserIdAndContactedId
                         (EMClient.getInstance().getCurrentUser(),id).getName();
@@ -268,14 +271,13 @@ public class ContactFragment extends Fragment {
         UsersBaseDao.deleteAll();
 //        UsersBaseDao.deleteByKey(4);
 
-        Users u1 = new Users(null,"user1","qwer","user01",R.drawable.head52);
+        Users u1 = new Users(null,"user1","qwer","user01",R.drawable.h23);
         UsersBaseDao.insert(u1);
-        Users u2 = new Users(null,"user2","qwer","user002",R.drawable.head81);
+        Users u2 = new Users(null,"user2","qwer","user002",R.drawable.h13);
         UsersBaseDao.insert(u2);
-        Users u3 = new Users(null,"user3","qwer","user zjz",R.drawable.head);
+        Users u3 = new Users(null,"user3","qwer",null,R.drawable.h29);
         UsersBaseDao.insert(u3);
-        Users u4 = new Users(null,"user4","qwer",null,R.drawable.head11);
-        UsersBaseDao.insert(u4);
+
 //
 //
 //        users = UsersBaseDao.searchAll();
@@ -324,15 +326,15 @@ public class ContactFragment extends Fragment {
                 null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
 
         ContactsBaseDao.insert(c4);
-//        Contacts c5 = new Contacts(null,"user2","user4",null,"12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
-//
-//        ContactsBaseDao.insert(c5);
-//
-//        Contacts c6 = new Contacts(null,"user4","user2","机智的小可爱4-2","12-28",
-//                "177","4-23","3-25","啦啦啦啦啦233333红红火火恍恍惚惚");
-//
-//        ContactsBaseDao.insert(c6);
+        Contacts c5 = new Contacts(null,"user1","user3",null,null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
+
+        ContactsBaseDao.insert(c5);
+
+        Contacts c6 = new Contacts(null,"user3","user1","奶奶",null,
+                null,null,null,null,null,null,"啦啦啦啦啦233333红红火火恍恍惚惚");
+
+        ContactsBaseDao.insert(c6);
 
 
 
@@ -348,20 +350,6 @@ public class ContactFragment extends Fragment {
 //            Log.e(TAG, "remark ---> "+con.getRemarks() );
 //        }
 
-    }
-    public static int getPic(String pid) {
-        Field f;
-        try {
-            f = R.drawable.class.getField(pid);
-            return f.getInt(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
 }

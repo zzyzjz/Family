@@ -88,7 +88,7 @@
         android:layout_marginTop="60dp"
         android:text="退  出  登  录"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
         android:background="@drawable/btn_attention"/>
 
 

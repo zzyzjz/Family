@@ -324,7 +324,9 @@ public class RemindActivity extends AppCompatActivity {
         Log.e(TAG, "------------------72`````contacted id --->"+contacted);
 
         if(ContactsBaseDao.searchByUserIdAndContactedId
-                (me,contacted).getName() != null){
+                (me,contacted).getName() != null
+                && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                (me,contacted).getName())){
             //当前用户给该联系人设置了name时
             name = ContactsBaseDao.searchByUserIdAndContactedId
                     (me,contacted).getName();

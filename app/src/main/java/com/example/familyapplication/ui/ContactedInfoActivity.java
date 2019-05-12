@@ -193,10 +193,11 @@ public class ContactedInfoActivity extends AppCompatActivity {
 
                                     runOnUiThread(new Runnable() {
                                         public void run() {
-                                            finish();
 
                                             Toast.makeText(getApplicationContext(),
                                                     "删除联系人成功...", Toast.LENGTH_SHORT).show();
+                                            finish();
+
                                         }
                                     });
                                 } catch (final HyphenateException e) {
@@ -242,8 +243,11 @@ public class ContactedInfoActivity extends AppCompatActivity {
         //初始化为当前联系人的userId
         String remarkName = contacted.getContactedId();
 
-        if(ContactsBaseDao.searchByUserIdAndContactedId
-                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null){
+        if(!contacted.getContactedId().equals(EMClient.getInstance().getCurrentUser())
+                && ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName() != null
+                && !TextUtils.isEmpty(ContactsBaseDao.searchByUserIdAndContactedId
+                (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName())){
             //当前用户给该联系人设置了name时
             remarkName = ContactsBaseDao.searchByUserIdAndContactedId
                     (EMClient.getInstance().getCurrentUser(),contacted.getContactedId()).getName();
@@ -261,7 +265,11 @@ public class ContactedInfoActivity extends AppCompatActivity {
         birth.setText(contact.getBirthday());
         //设置TEL
         tel = findViewById(R.id.contacted_info_tv_tel);
-        tel.setText(contact.getTel());
+        if (contact.getTel() != null && !TextUtils.isEmpty(contact.getTel())){
+            tel.setText(contact.getTel());
+        }else {
+            tel.setText("点击设置电话号码");
+        }
         //设置最近通话
         callTime = findViewById(R.id.contacted_info_tv_call);
         callTime.setText(contact.getLastCallTime());
